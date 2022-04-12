@@ -1,3 +1,5 @@
+USE raymond;
+
 DROP DATABASE if exists blog_db;
 
 CREATE DATABASE if not exists blog_db;
