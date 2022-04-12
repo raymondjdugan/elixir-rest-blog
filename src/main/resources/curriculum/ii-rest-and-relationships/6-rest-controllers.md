@@ -22,7 +22,7 @@ Most importantly, `@RestController` allows us to signify that a controller exist
 ### FEA-1-A: Create a REST Controller to allow a client to make requests/responses related to Blog Posts.
 
 ---
-#### 1. Add the following dependency to your `pom.xml`:
+#### 1. Make sure your `pom.xml` has the following dependency (be sure to reload Maven if you add it):
 
 ```XML
 <dependency>
