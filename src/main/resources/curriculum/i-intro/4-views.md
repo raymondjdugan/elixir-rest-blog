@@ -1,6 +1,19 @@
 # Views
 
-# WE WILL NOT BE USING SPRING TO SERVE UP VIEWS. PLEASE SKIP THIS LESSON
+# WE WILL NOT BE USING SPRING TO SERVE UP VIEWS. 
+
+## Instead, let's go deeper with Controllers
+
+How to return response in JSON?
+
+Let's implement a POST using the RequestBody parameter
+
+Now let's implement PUT using RequestBody and PathVariable
+
+### REFERENCE:
+See https://www.baeldung.com/spring-request-response-body
+
+# PLEASE SKIP THE REST OF THIS LESSON
 
 We will be using [Thymeleaf](http://www.thymeleaf.org/), a templating language which is often 
 used to bind models (POJOs) to HTML. 
