@@ -121,7 +121,7 @@ public void getById(@PathVariable Long id){
 ## TODO: `getAll()`
 In `PostsController`, create a `public` method called `getAll()`
 
-- This method will return a list of `Post` objects
+- This method will return an `ArrayList` of `Post` objects
 
 
 - Annotate this method with `@GetMapping`
