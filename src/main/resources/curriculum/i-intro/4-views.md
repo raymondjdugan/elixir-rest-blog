@@ -1,5 +1,7 @@
 # Views
 
+# WE WILL NOT BE USING SPRING TO SERVE UP VIEWS. PLEASE SKIP THIS LESSON
+
 We will be using [Thymeleaf](http://www.thymeleaf.org/), a templating language which is often 
 used to bind models (POJOs) to HTML. 
 
