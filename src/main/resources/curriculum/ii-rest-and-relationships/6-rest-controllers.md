@@ -127,7 +127,7 @@ In `PostsController`, create a `public` method called `getAll()`
 - Annotate this method with `@GetMapping`
 
 
-- In `getPosts()`, let's make a list of `Post` objects and add 2-3 posts to that list with believable values.
+- In `getAll()`, let's make a list of `Post` objects and add 2-3 posts to that list with believable values.
 
 
 - Now, return that list to fulfil the return expectation of the method.
@@ -135,6 +135,8 @@ In `PostsController`, create a `public` method called `getAll()`
 ---
 
 ## TODO: Let's Test!
+
+### NOTE: You can skip this step if you wish to use Postman for testing
 
 Now that we are using Spring, add this fun little dependency to our `pom.xml`:
 
