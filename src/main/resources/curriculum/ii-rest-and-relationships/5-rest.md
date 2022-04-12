@@ -1,14 +1,14 @@
-#REST and RESTful APIs
+# REST and RESTful APIs
 
-##What is REST and what makes a RESTful API?
+## What is REST and what makes a RESTful API?
 
 In Roy Fielding's doctoral dissertation, he outlined an architecture for web communication called
 
-###***Representational State Transfer***
+### ***Representational State Transfer***
 
 or
 
-###***REST***
+### ***REST***
 
 In this paradigm, a set of constraints are placed on the way 
 data can be transmitted to/from an API.
@@ -33,7 +33,7 @@ According to RedHat, the constraints needed for a RESTful API are:
 - OPTIONAL: Code-on-demand -> the ability to send executable code from the server to the client when requested, extending client functionality.
 
 ---
-**Practically, you will often see a similar image to the below which attempts to explain REST**:
+** Practically, you will often see a similar image to the below which attempts to explain REST**:
 
 ![REST Image](../REST.png)
 
@@ -42,17 +42,17 @@ While this image is a ***great*** example of a client-server relationship, it do
 We will, as time moves on, cover more in-depth ideas behind REST and why it is so helpful to us as web developers.
 
 ---
-###Important points to remember: 
+### Important points to remember: 
 
-###REST is not a protocol or a standard - it is a set of constraints.
+### REST is not a protocol or a standard - it is a set of constraints.
 
-###REST can be implemented in a number of ways.
+### REST can be implemented in a number of ways.
 
 
-####For more reading, check out [this link](https://www.redhat.com/en/topics/api/what-is-a-rest-api).
+#### For more reading, check out [this link](https://www.redhat.com/en/topics/api/what-is-a-rest-api).
 
 ####To read Roy Fielding's own work on this concept, [go here](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
 
 ---
-##Next Up: [Rest Controllers](6-rest-controllers.md)
+## Next Up: [Rest Controllers](6-rest-controllers.md)
 
