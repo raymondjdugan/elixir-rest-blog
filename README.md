@@ -23,7 +23,7 @@ We can use this tool to quickly test resource endpoints by navigating to http://
 
 Swagger is an excellent tool which provides full documentation of exposed endpoints, including sample requests and responses - makes the job of testing very smooth!
 
-##Security
+## Security
 ### Security for this project will handled using an implementation of OAuth2.0 in Spring Boot / Spring Security
 #### Further Reading from Sergio Moretti @ [toptal](https://www.toptal.com/spring/spring-boot-oauth2-jwt-rest-protection)
 
@@ -49,7 +49,7 @@ Normally, these components are divided into two applications: one for the Auth s
 In our case, we can use Spring Security OAuth2 Autoconfigure to bring all of these components under the same umbrella.
 This makes the development experience much more seamless because we are already placing the Client and Resource server in one project.
 
-###Auth Flow
+### Auth Flow
 
 (If the user exists already, skip to step 3)
 1. The Client sends a POST request to ```/api/users``` to make a new User
