@@ -7,6 +7,7 @@ import Login from "./views/Login.js";
 import LoginEvent from "./auth.js";
 import Register from "./views/Register.js"
 import {RegisterEvent} from "./views/Register.js";
+// import { PostsEvent } from "./views/PostIndex"
 
 /**
  * Returns the route object for a specific route based on the given URI

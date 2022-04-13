@@ -5,6 +5,11 @@ public class Post {
     private String title;
     private String content;
 
+    @Override
+    public String toString() {
+        return String.format("ID: %d, TITLE: %s, CONTENT: %s",id, title, content);
+    }
+
     public Post () {}
 
     public Post(long id, String title, String content) {

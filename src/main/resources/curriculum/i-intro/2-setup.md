@@ -7,6 +7,8 @@ Building this application will allow you to learn how Spring handles basic CRUD
 operations, as well as user authentication. In addition, you can use your blog
 as a personal site to show off your Java and JavaScript chops!
 
+# NOTE: IF YOU BARE-CLONED THIS PROJECT, YOU DO NOT NEED TO DO THE BELOW SETUP
+
 ---
 ## IntelliJ Setup
 

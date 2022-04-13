@@ -24,7 +24,7 @@ application. We can even inject services into other services!
 This is how you can use it in order to get the list of all Ads.
 
 ```java
-
+import com.example.restblog.data.PostRepository;
 
 public class PostsController {
 
@@ -39,12 +39,12 @@ public class PostsController {
 
     @GetMapping
     public List<Post> getPosts() {
-
+        
         // Because of DI, 
         // we don't have to do this:
-
+       
         // PostRepositoryImpl repo = new PostRepositoryImpl()
-
+        
         // Instead, we get this lovely snippet 
         // and can use postRepository over and 
         // again in this class.

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/posts", headers = "Accept=application/json")
 public class PostController {
 
@@ -36,17 +37,19 @@ public class PostController {
 
     @PostMapping
     private void createPost(@RequestBody Post newPost){
-        System.out.println(newPost);
+        System.out.println(newPost.toString());
     }
 
+    @CrossOrigin
     @PutMapping("{id}")
     private void updatePost(@PathVariable long id, @RequestBody Post newPost){
         System.out.println(id);
         System.out.println(newPost);
     }
 
+
     @DeleteMapping("{id}")
-    private void deletePost(@PathVariable long id, @RequestBody Post newPost){
+    private void deletePost(@PathVariable long id){
         System.out.println(id);
     }
 }

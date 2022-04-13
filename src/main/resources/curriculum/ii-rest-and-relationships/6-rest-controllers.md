@@ -34,7 +34,7 @@ Most importantly, `@RestController` allows us to signify that a controller exist
 #### 2. Now, let's go create a `Post` class.
   - On the same level as the `web` package, create a new package named `data`
   - Inside `data`, create a class named `Post`
-  - Give `Post` the below fields, along with empty constructor, full constructor, and all getters/setters.
+  - Give `Post` the below fields, along with empty constructor, full constructor, and all getters/setters. **NOTE: you can use Lombok to do the getters, setters, and constructors for you!** 8O
 
 ```JAVA
 private Long id;
@@ -64,9 +64,9 @@ public class PostsController {
 
 From `api/posts`, we can further define what requests go to which methods.
 
-ie: `GET` requests on `api/posts` go to the method annotated with `@GetMapping`.
+i.e., `GET` requests on `api/posts` go to the method annotated with `@GetMapping`.
 
-Or, `DELETE` requests on `api/posts/{id}` go to `@DeleteMapping("{id}")`.
+and `DELETE` requests on `api/posts/{id}` go to `@DeleteMapping("{id}")`.
 
 Also, with *Spring*, we do not need to convert objects to and from JSON with another dependency. ***Spring will handle
 serializing/deserializing for us!***
@@ -110,9 +110,9 @@ suggested to name the *method* parameter the same as your incoming path variable
 
 ```JAVA
 @GetMapping("{id}")
-public void getById(@PathVariable Long id){
+public Post getById(@PathVariable Long id){
         ...
-        }
+}
 ```
 
 

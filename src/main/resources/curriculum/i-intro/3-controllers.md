@@ -21,7 +21,7 @@ By implementing servlets manually, we have a greater appreciation for what a rob
 
 The first step in building our application will be to define a *controller* and
 define what routes the controller responds to. Luckily, Spring gives us a very
-easy way to do this. The following code defines a controller that responds to
+easy way to do this. Create a Java class in the `web` package called `HelloController`. The following code defines a controller that responds to
 requests for `/hello`:
 
 ```java
@@ -87,6 +87,7 @@ For example, an `int`:
 
 ```java
 @GetMapping("/increment/{number}")
+@ResponseBody
 public String addOne(@PathVariable int number) {
     return number + " plus one is " + (number + 1) + "!";
 }
