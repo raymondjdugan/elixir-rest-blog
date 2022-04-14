@@ -20,12 +20,12 @@ public class PostController {
     }
 
     @GetMapping
-    private List<Post> getAll() {
+    List<Post> getAll() {
         return createList();
     }
 
     @GetMapping("{id}")
-    private Post getOne(@PathVariable long id) {
+    Post getOne(@PathVariable long id) {
         List<Post> blogs = createList();
         for (Post blog: blogs) {
             if (blog.getId() == id) {
@@ -36,20 +36,19 @@ public class PostController {
     }
 
     @PostMapping
-    private void createPost(@RequestBody Post newPost){
+    void createPost(@RequestBody Post newPost){
         System.out.println(newPost.toString());
     }
 
-    @CrossOrigin
     @PutMapping("{id}")
-    private void updatePost(@PathVariable long id, @RequestBody Post newPost){
+    void updatePost(@PathVariable long id, @RequestBody Post newPost){
         System.out.println(id);
         System.out.println(newPost);
     }
 
 
     @DeleteMapping("{id}")
-    private void deletePost(@PathVariable long id){
+    void deletePost(@PathVariable long id){
         System.out.println(id);
     }
 }
