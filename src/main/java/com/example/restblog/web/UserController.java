@@ -27,10 +27,32 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    User getSingleUser(@PathVariable long id){
+    User getSingleUser(@PathVariable long id ){
         List<User> users = createUserList();
         for (User user : users) {
             if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("username")
+    User getByUsername(@RequestParam String username){
+        List<User> users = createUserList();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("email")
+    User getByEmail(@RequestParam String email){
+        List<User> users = createUserList();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(email)) {
                 return user;
             }
         }
@@ -52,6 +74,5 @@ public class UserController {
     void deleteUser(@PathVariable long id) {
         System.out.println(id);
     }
-
 
 }

@@ -35,9 +35,10 @@ public class PostController {
         return null;
     }
 
+
     @PostMapping
     void createPost(@RequestBody Post newPost){
-        System.out.println(newPost.toString());
+        System.out.println(newPost);
     }
 
     @PutMapping("{id}")
