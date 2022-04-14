@@ -13,8 +13,8 @@ export default function PostIndex(props) {
                         `    <div class="post-container">
            <h3>${post.title}</h3> 
            <p>${post.content}</p>
-           <button data-id="${num}" class="edit-btn">Edit Post</button>
-           <button data-id="${num++}" class="delete-btn">Delete Post</button>
+           <button data-edit-btn-pos="${num}" class="edit-btn">Edit Post</button>
+           <button data-del-btn-pos="${num++}" class="del-btn">Delete Post</button>
            </div>
             `)
                         .join('')}
@@ -65,7 +65,7 @@ const editPost = _ => {
     let id = null;
     $(".edit-btn").click((e) => {
         $(".post-container").each((index, el) => {
-            if (parseInt(e.target.getAttribute("data-id")) === index) {
+            if (parseInt(e.target.getAttribute("data-edit-btn-pos")) === index) {
                 id = index;
                 $("#edit-title").val($(el).children("h3").text())
                 $("#edit-content").val($(el).children("p").text())
@@ -97,10 +97,10 @@ const editPost = _ => {
 }
 
 const deletePost = _ => {
-    $(".delete-btn").click((e) => {
+    $(".del-btn").click((e) => {
         console.log(e.target.getAttribute("data-id"))
         $(".post-container").each((index, el) => {
-            if (parseInt((e.target.getAttribute("data-id"))) === index) {
+            if (parseInt((e.target.getAttribute("data-del-btn-pos"))) === index) {
                 fetch(`http://localhost:8081/api/posts/${index}`, {method: "DELETE"})
                     .then(res => {
                         console.log(res.status)
