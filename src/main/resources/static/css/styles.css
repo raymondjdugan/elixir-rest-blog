@@ -1,0 +1,15 @@
+.post-container {
+    flex-basis: calc(33% - 10px);
+}
+
+#posts-container {
+    width: 75%;
+}
+
+#post-form {
+    width: 25%;
+}
+
+#content {
+    height: 300px;
+}
