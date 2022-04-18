@@ -12,6 +12,7 @@ export default function PostIndex(props) {
                         `<div class="post-container card mx-1 mb-2 text-dark" >
                             <h3 id="title-${post.id}" class="card-title">${post.title}</h3> 
                             <p id="content-${post.id}" class="card-body">${post.content}</p>
+                           ${post.categories.forEach(category => category.name)}
                             <div class="card-footer d-flex justify-content-around">
                                 <button data-id="${post.id}" class="edit-btn btn btn-sm btn-primary"">Edit Post</button>
                                 <button data-id="${post.id}" class="del-btn btn btn-sm btn-primary"">Delete Post</button>

@@ -25,6 +25,8 @@ export default function fetchData(state, request) {
         Object.keys(state).forEach((key, index) => {
             props[key] = propsData[index];
         });
+        console.log(props)
         return props;
+
     });
 }
