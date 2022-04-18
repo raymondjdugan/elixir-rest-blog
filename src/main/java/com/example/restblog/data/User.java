@@ -1,14 +1,25 @@
 package com.example.restblog.data;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue
     private long id;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private Date createdAt;
+    @Column(nullable = false)
     private Role role;
+//    private Collection<Post> posts;
 
     @Override
     public String toString() {

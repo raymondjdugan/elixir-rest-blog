@@ -1,14 +1,11 @@
 export default function Home(props) {
-    console.log("The frontend did it. HER FAULT");
     return `
-        <header>
-            <h1>Home Page</h1>
+        <header class="text-center">
+            <h1>Welcome to Sir Bloggify</h1>
         </header>
         <main>
-            <div>
-                <p>
-                    This is the home page text.
-                </p>    
+            <div class="text-center">
+                <img src="https://images.pexels.com/photos/262508/pexels-photo-262508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Blog Picture">
             </div>
         </main>
     `;
