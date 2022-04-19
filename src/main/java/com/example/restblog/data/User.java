@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -29,7 +30,6 @@ public class User {
     private LocalDate createdAt;
     @Column(nullable = false)
     private Role role;
-//    private Collection<Post> posts;
-
-
+    @OneToMany
+    private Collection<Post> posts;
 }

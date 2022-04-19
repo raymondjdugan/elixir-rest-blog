@@ -8,20 +8,8 @@ export default function PostIndex(props) {
         </header>
         <main class="d-flex mx-2 h-100">
             <div id="posts-container" class="d-flex flex-wrap justify-content-between mb-auto">
-                ${props.posts.map(post =>
-                        `<div class="post-container card mx-1 mb-2 text-dark" >
-                            <h3 id="title-${post.id}" class="card-title">${post.title}</h3> 
-                            <p id="content-${post.id}" class="card-body">${post.content}</p>
-                           ${post.categories.forEach(category => category.name)}
-                            <div class="card-footer d-flex justify-content-around">
-                                <button data-id="${post.id}" class="edit-btn btn btn-sm btn-primary"">Edit Post</button>
-                                <button data-id="${post.id}" class="del-btn btn btn-sm btn-primary"">Delete Post</button>
-                            </div>
-                        </div>
-            `)
-                        .join('')}
+                ${getPosts(props)}
             </div>
-
             <form id="post-form" class="h-100 my-auto">
                 <div class="text-center">
                     <h3>Create/Update Post</h3>
@@ -37,6 +25,40 @@ export default function PostIndex(props) {
     `;
 }
 
+const loggedIn = "Ray"
+
+const getCategories = (categoriesArray) => {
+    let html = "<div>"
+    for (let i=0; i<categoriesArray.length; i++) {
+       html +=  `<span class="badge badge-pill badge-primary bg-primary">${categoriesArray[i].name}</span> `
+    }
+    html +="</div>"
+    return html;
+}
+
+const getPosts = (props) => {
+    //language=HTML
+    return props.posts.map(post =>
+        `
+            <div class="post-container card mx-1 mb-2 text-dark">
+                <h3 id="title-${post.id}" class="card-title">${post.title}</h3>
+                <p id="content-${post.id}" class="card-body">${post.content}</p>
+                <div>${getCategories(post.categories)}</div>
+                <div class="card-footer d-flex justify-content-around">
+                    <button data-id="${post.id}" class="edit-btn btn btn-sm btn-primary"
+                    ">Edit Post</button>
+                    <button data-id="${post.id}" class="del-btn btn btn-sm btn-primary"
+                    ">Delete Post</button>
+                    <div>
+                        <p>${getUsername(post.user)}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('')
+}
+const getUsername = (user) => {
+    return user === null ? "Author Not Found" : user.username;
+}
 const createPost = _ => {
     const newPost = {
         title: $('#title').val(),
@@ -49,7 +71,7 @@ const createPost = _ => {
         body: JSON.stringify(newPost)
     }
 
-    fetch("http://localhost:8081/api/posts", postRequest)
+    fetch(`http://localhost:8081/api/posts?username=${loggedIn}`, postRequest)
         .then(res => {
             console.log(res.status)
             createView("/posts")
