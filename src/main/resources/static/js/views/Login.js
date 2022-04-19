@@ -20,4 +20,7 @@ export default function Login(props) {
 
 }
 
+export function UserPosts() {
+
+}
 

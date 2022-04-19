@@ -4,6 +4,8 @@ import com.example.restblog.data.Category;
 import com.example.restblog.data.CategoryRepsitory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/categories", headers = "Accept=application/json")
@@ -15,7 +17,7 @@ public class CategoriesController {
     }
 
     @GetMapping
-    Category getPostsByCategory(@RequestParam String categoryName) {
-        return categoryRepsitory.findByName(categoryName);
+    List<Category> getAll(){
+        return categoryRepsitory.findAll();
     }
 }

@@ -25,3 +25,7 @@
 #find-user {
     flex: 3 1 auto;
 }
+
+.card-body {
+    white-space: pre-wrap;
+}

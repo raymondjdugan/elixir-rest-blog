@@ -65,6 +65,7 @@ const findUser = () => {
         fetch(`http://localhost:8081/api/users/${findby}?${findby}=${findUser}`)
             .then(results => results.json())
             .then(user => {
+                console.log(user)
                 $("#username").val(user.username)
                 $("#email").val(user.email)
                 $("#createdAt").val(user.createdAt)

@@ -27,6 +27,5 @@ export default function fetchData(state, request) {
         });
         console.log(props)
         return props;
-
     });
 }
