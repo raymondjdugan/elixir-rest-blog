@@ -1,16 +1,21 @@
 package com.example.restblog.web;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.restblog.data.Category;
+import com.example.restblog.data.CategoryRepsitory;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/categories", headers = "Accept=application/json")
 public class CategoriesController {
+    public final CategoryRepsitory categoryRepsitory;
 
-//    @GetMapping
-//    Category getPostsByCategory(@RequestParam String categoryName) {
-//
-//    }
+    public CategoriesController(CategoryRepsitory categoryRepsitory) {
+        this.categoryRepsitory = categoryRepsitory;
+    }
+
+    @GetMapping
+    Category getPostsByCategory(@RequestParam String categoryName) {
+        return categoryRepsitory.findByName(categoryName);
+    }
 }

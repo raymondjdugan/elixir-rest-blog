@@ -122,11 +122,7 @@ const submit = _ => {
         $("#content").val($(`#content-${id}`).html())
     });
     $('#submit-btn').click(function () {
-        if (id === null) {
-            createPost()
-        } else {
-            editPost(id)
-        }
+        id === null ? createPost() : editPost(id)
     });
 }
 

@@ -40,4 +40,5 @@ public class Post {
     )
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
+
 }

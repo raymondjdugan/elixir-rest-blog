@@ -21,7 +21,6 @@ public class PostController {
         this.userRepository = userRepository;
     }
 
-
     @GetMapping
     List<Post> getAll() {
         return postRepository.findAll();
@@ -43,11 +42,16 @@ public class PostController {
     }
 
     @PutMapping("{id}")
-    void updatePost(@PathVariable long id, @RequestBody Post newPost){
-        System.out.println(id);
-        System.out.println(newPost);
+    void updatePost(@PathVariable long id, @RequestBody Post newPost) {
+        Post postToUpate = postRepository.getById(id);
+        if (!newPost.getTitle().isEmpty()) {
+            postToUpate.setTitle(newPost.getTitle());
+        }
+        if (!newPost.getContent().isEmpty()) {
+            postToUpate.setContent(newPost.getContent());
+        }
+        postRepository.save(postToUpate);
     }
-
 
     @DeleteMapping("{id}")
     void deletePost(@PathVariable long id){
