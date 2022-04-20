@@ -14,11 +14,13 @@ public class PostController {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CategoryRepsitory categoryRepsitory;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postRepository, UserRepository userRepository, CategoryRepsitory categoryRepsitory) {
+    public PostController(EmailService emailService, PostRepository postRepository, UserRepository userRepository, CategoryRepsitory categoryRepsitory) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.categoryRepsitory = categoryRepsitory;
+        this.emailService = emailService;
     }
 
     @GetMapping
