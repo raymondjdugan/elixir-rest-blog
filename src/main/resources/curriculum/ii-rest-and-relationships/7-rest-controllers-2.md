@@ -35,11 +35,11 @@ Now, we are free to use the newly acquired parameter same as any other method!
 ---
 ### The following is a feature list to be implemented in your blog application
 
-## FEA-2: As a User, I can create posts.
+## FEA-2: As a AccountInfo, I can create posts.
 
-## FEA-3: As a User, I can edit posts.
+## FEA-3: As a AccountInfo, I can edit posts.
 
-## FEA-4: As a User, I can delete posts.
+## FEA-4: As a AccountInfo, I can delete posts.
 
 ---
 
@@ -251,6 +251,6 @@ If you investigate the flow of our code, you will find that the `viewEvent` prop
 ---
 
 
-##Next Up: [The User](8-the-user.md)
+##Next Up: [The AccountInfo](8-the-user.md)
 
 

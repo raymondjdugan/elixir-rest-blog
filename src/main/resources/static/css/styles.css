@@ -29,3 +29,7 @@
 .card-body {
     white-space: pre-wrap;
 }
+
+.hidden {
+    display: none;
+}

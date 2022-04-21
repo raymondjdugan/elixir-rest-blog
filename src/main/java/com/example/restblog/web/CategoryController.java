@@ -9,10 +9,10 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/categories", headers = "Accept=application/json")
-public class CategoriesController {
+public class CategoryController {
     public final CategoryRepsitory categoryRepsitory;
 
-    public CategoriesController(CategoryRepsitory categoryRepsitory) {
+    public CategoryController(CategoryRepsitory categoryRepsitory) {
         this.categoryRepsitory = categoryRepsitory;
     }
 

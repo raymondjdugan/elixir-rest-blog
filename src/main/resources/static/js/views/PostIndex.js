@@ -1,24 +1,29 @@
 import createView from "../createView.js";
 
+const BASE = "http://localhost:8080/api/posts"
+
 export default function PostIndex(props) {
     // language=HTML
     return `
-        <header class="text-center">
-            <h1>Posts Page</h1>
+        <header class="d-flex justify-content-end">
+            <form class="w-25 my-3 mr-2">
+                <select class="form-select category-select" id="search-by-category">
+                    <option value="" disabled selected>Select Category To Search By</option>
+                </select>
+            </form>
         </header>
-        <main class="d-flex flex-column mx-2 h-100 align-items-center">
+        <main class="d-flex mx-2 h-100 justify-content-center">
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
                 ${getPosts(props)}
             </div>
-            <form id="post-form" class="h-100 my-auto">
-                <div class="text-center">
+            <form id="post-form" class="h-100 my-auto w-50 hidden">
+                <div class="text-center flex-grow-1">
                     <h3>Create/Update Post</h3>
                     <label for="title" class="form-label"></label>
                     <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
                     <label for="content" class="form-label"></label>
                     <textarea class="form-control" name="content" id="content" placeholder="Enter Content Here"></textarea>
-                    <select class="form-select" multiple id="category-select">
-                        <option value="null"></option>
+                    <select class="form-select category-select" multiple id="category-select">
                     </select>
                     <button class="btn btn-primary mt-2" id="clear-btn" type="button">Clear</button>
                     <button class="btn btn-primary mt-2" id="submit-btn" type="button">Submit</button>
@@ -28,16 +33,23 @@ export default function PostIndex(props) {
     `;
 }
 
-const loggedIn = "chelsea"
+const loggedIn = "Ray"
+
+const showForm = () => {
+    if (loggedIn != null) {
+        $("#post-form").removeClass("hidden");
+        $(".edit-btn").removeClass("hidden");
+        $(".del-btn").removeClass("hidden");
+    }
+}
 
 const getCategories = (categoriesArray) => {
     let html = "<div>"
-    for (let i = 0; i < categoriesArray.length; i++) {
-        html += `<span class="badge badge-pill badge-primary bg-primary">${categoriesArray[i].name}</span> `
-    }
+    categoriesArray.forEach(category => html += `<span>${category.name}</span>`)
     html += "</div>"
     return html;
 }
+
 const getPosts = (props) => {
     //language=HTML
     return props.posts.map(post =>
@@ -45,28 +57,31 @@ const getPosts = (props) => {
             <div class="post-container card mx-1 mb-2 text-dark bg-transparent border-0">
                 <h3 id="title-${post.id}" class="card-title">${post.title}</h3>
                 <p id="content-${post.id}" class="card-body">${post.content}</p>
-                <div>${getCategories(post.categories)}</div>
-                <div class="card-footer d-flex justify-content-around bg-transparent mb-5">
-                    <button data-id="${post.id}" class="edit-btn btn btn-sm btn-primary"
-                    ">Edit Post</button>
-                    <button data-id="${post.id}" class="del-btn btn btn-sm btn-primary"
-                    ">Delete Post</button>
+                <div class="d-flex justify-content-end">${getCategories(post.categories)}</div>
+                <div class="card-footer d-flex justify-content-between bg-transparent mb-5">
                     <div>
-                        <p>${getUsername(post.user)}</p>
+                        <button data-id="${post.id}" class="edit-btn btn btn-sm btn-primary hidden"
+                        ">Edit Post</button>
+                        <button data-id="${post.id}" class="del-btn btn btn-sm btn-primary hidden"
+                        ">Delete Post</button>
+                    </div>
+                    <div>
+                        <p>${getUsername(post.author)}</p>
                     </div>
                 </div>
             </div>
         `).join('')
 }
+
 const getFormCategories = _ => {
-    $.ajax("http://localhost:8081/api/categories", {method: 'GET'})
+    $.ajax("http://localhost:8080/api/categories", {method: 'GET'})
         .done(r => {
             r.forEach(cat => {
                 //language=HTML
                 let html = `
                     <option value="${cat.name}">${cat.name}</option>
                 `
-                $("#category-select").append(html)
+                $(".category-select").append(html)
             })
         })
 }
@@ -74,6 +89,7 @@ const getFormCategories = _ => {
 const getUsername = (user) => {
     return user === null ? "Author Not Found" : user.username;
 }
+
 const createPost = _ => {
     let categories = $("#category-select").val();
     const newPost = {
@@ -87,7 +103,7 @@ const createPost = _ => {
         body: JSON.stringify(newPost)
     }
 
-    fetch(`http://localhost:8081/api/posts?username=${loggedIn}&categories=${categories}`, postRequest)
+    fetch(`http://localhost:8080/api/posts?username=${loggedIn}&categories=${categories}`, postRequest)
         .then(res => {
             console.log(res.status)
             createView("/posts")
@@ -110,7 +126,7 @@ const editPost = id => {
         body: JSON.stringify(updatePost)
     }
 
-    fetch(`http://localhost:8081/api/posts/${id}?categories=${categories}`, editRequest)
+    fetch(`http://localhost:8080/api/posts/${id}?categories=${categories}`, editRequest)
         .then(_ => {
             createView("/posts")
         }).catch(_ => {
@@ -121,7 +137,7 @@ const editPost = id => {
 const deletePost = _ => {
     $(".del-btn").click((e) => {
         const index = parseInt((e.target.getAttribute("data-id")))
-        fetch(`http://localhost:8081/api/posts/${index}`, {method: "DELETE"})
+        fetch(`http://localhost:8080/api/posts/${index}`, {method: "DELETE"})
             .then(res => {
                 createView("/posts")
             }).catch(error => {
@@ -150,9 +166,27 @@ const clearForm = _ => {
     })
 }
 
+const searchByCategory = _ => {
+    $("#search-by-category").change(() => {
+        const category = $("#search-by-category").val()
+        fetch(`${BASE}/searchByCategory?category=${category}`)
+            .then(results => results.json())
+            .then(posts => {
+                PostIndex(posts)
+                createView("/posts")
+            })
+    })
+}
+$("#post-form").scroll(function () {
+    $(this).scroll({top: window.scrollY})
+})
+
+
 export function PostsEvent() {
     submit();
     deletePost();
     clearForm();
-    getFormCategories()
+    getFormCategories();
+    showForm();
+    searchByCategory();
 }

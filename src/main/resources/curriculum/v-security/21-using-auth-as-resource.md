@@ -16,7 +16,7 @@ With this object, we can make additional checks on incoming request bodies.
 
 Even better, we can securely associate a user with another object!
 
-For example: Our application needs to associate a new `Post` with the `User` who created it.
+For example: Our application needs to associate a new `Post` with the `AccountInfo` who created it.
 
 ```JAVA
     @PostMapping
@@ -25,7 +25,7 @@ For example: Our application needs to associate a new `Post` with the `User` who
     }
 ```
 
-If we do not want to expose the `User` information on the frontend, 
+If we do not want to expose the `AccountInfo` information on the frontend, 
 we can simple add an `OAuth2Authentication` object as a parameter *inside* the `create` method:
 
 ```JAVA
@@ -36,14 +36,14 @@ we can simple add an `OAuth2Authentication` object as a parameter *inside* the `
 ```
 
 From here, we can access the `email` address of the user, 
-ask the `UserRepository` to grab the associated `User` object,
+ask the `UserRepository` to grab the associated `AccountInfo` object,
 and set the `user` field on the new `Post`:
 
 ```JAVA
     @PostMapping
     private void create(@RequestBody Post newPost, OAuth2Authentication auth){
         String email = auth.getName(); // yes, the email is found under "getName()"
-        User user = userRepository.findByEmail(email).get(); // use the email to get the user who made the request
+        AccountInfo user = userRepository.findByEmail(email).get(); // use the email to get the user who made the request
         newPost.setUser(user); //set the user to the post
         postsRepository.save(newPost); //save the post!
     }

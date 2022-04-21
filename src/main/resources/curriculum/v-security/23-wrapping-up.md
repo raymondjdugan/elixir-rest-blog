@@ -4,11 +4,11 @@ Congrats! You should have implemented the following features for your Blogging A
 
 ### FEA-1: As a user, I can view any posts.
 
-### FEA-2: As a User, I can create posts.
+### FEA-2: As a AccountInfo, I can create posts.
 
-### FEA-3: As a User, I can edit posts.
+### FEA-3: As a AccountInfo, I can edit posts.
 
-### FEA-4: As a User, I can delete posts.
+### FEA-4: As a AccountInfo, I can delete posts.
 
 ### FEA-5: As a user, I can register with the application
 

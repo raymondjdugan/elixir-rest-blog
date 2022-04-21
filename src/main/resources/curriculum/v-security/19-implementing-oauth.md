@@ -37,7 +37,7 @@ Be sure to pay **close attention** to details in this lesson. Naming, placement,
 - This class begins registering our Resource Owner with Spring Security
   
 
-- As well, it pulls the `Role` from our `User` in order to allow Spring Security to do Authorizations.
+- As well, it pulls the `Role` from our `AccountInfo` in order to allow Spring Security to do Authorizations.
 
 ```JAVA
 
@@ -61,9 +61,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = repository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found: " + email));
+        AccountInfo user = repository.findByEmail(email).orElseThrow(() -> new RuntimeException("AccountInfo not found: " + email));
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Arrays.asList(authority));
+        return new org.springframework.security.core.userdetails.AccountInfo(user.getEmail(), user.getPassword(), Arrays.asList(authority));
     }
 }
 ```
@@ -74,10 +74,10 @@ public class UserService implements UserDetailsService {
 
 ### 1. In `security`, create a class named `ServerSecurityConfig`.
 
-- This class begins orchestrating a more full picture of the `User` in relation to our application
+- This class begins orchestrating a more full picture of the `AccountInfo` in relation to our application
   
 
-- It authenticates the source of the `User` (`UserService` / `UserRepository`)
+- It authenticates the source of the `AccountInfo` (`UserService` / `UserRepository`)
   
 
 - Also, it provides an injection point for our password encryption tool (`BCryptPasswordEncoder`)
@@ -137,7 +137,7 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 ### 2. In `security` Create a class named `OAuthConfiguration`.
 
 Here, we bind together our 
-  - Resource Owner -> `User`/`UserDetailsService`, 
+  - Resource Owner -> `AccountInfo`/`UserDetailsService`, 
   - `AuthenticationManager` -> provided through delegation via `ServerSecurityConfig`, 
   - `PasswordEncoder` -> Defined in `ServerSecurityConfig` as a Bean (`@Bean`)
     
@@ -366,7 +366,7 @@ Now, while this may seem counter-intuitive to our entire idea of locking down en
 
 Will this be exactly the configuration per-endpoint you use? Probably not! This is a very draconian approach in that we are totally locking down our `api/**` endpoints aside from `api/users/create`.
 
-Think of our anonymous user: should they be able to see all posts? See information on the User who posted?
+Think of our anonymous user: should they be able to see all posts? See information on the AccountInfo who posted?
 
 We may need a way to be specific on the access provided to endpoints under each umbrella (`api/users`, `api/posts`, etc).
 

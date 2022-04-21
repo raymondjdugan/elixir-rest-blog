@@ -52,11 +52,11 @@ This makes the development experience much more seamless because we are already 
 ### Auth Flow
 
 (If the user exists already, skip to step 3)
-1. The Client sends a POST request to ```/api/users``` to make a new User
-2. On successful creation, server redirects to ```/oauth/token``` with User credentials
+1. The Client sends a POST request to ```/api/users``` to make a new AccountInfo
+2. On successful creation, server redirects to ```/oauth/token``` with AccountInfo credentials
 3. ```/oauth/token``` responds to ORIGINAL request route with an ```access_token``` and ```refresh_token```
 4. Client accepts the response and places tokens into ```localStorage```
-5. The Resource Owner (new User) is now 'logged in' and may begin making requests to protected endpoints.
+5. The Resource Owner (new AccountInfo) is now 'logged in' and may begin making requests to protected endpoints.
     - When making requests to ```/api/*```, the Client must include the ```access_token``` as an ```Authorization``` header of type ``Bearer``
   ```
   {
@@ -70,7 +70,7 @@ This makes the development experience much more seamless because we are already 
 ```
 
 #### ***Of Note:*** 
-If the server shuts down, the tokens become invalid. The User must "log in" again.
+If the server shuts down, the tokens become invalid. The AccountInfo must "log in" again.
 
 # blog-app-1
 # blog-app-1

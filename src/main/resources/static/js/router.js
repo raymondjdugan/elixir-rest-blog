@@ -1,15 +1,12 @@
 import Home from "./views/Home.js";
-import PostIndex from "./views/PostIndex.js";
-import { PostsEvent } from "./views/PostIndex.js"
+import PostIndex, { PostsEvent } from "./views/PostIndex.js";
 import About from "./views/About.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
 import Login from "./views/Login.js";
 import LoginEvent from "./auth.js";
-import Register from "./views/Register.js"
-import { RegisterEvent } from "./views/Register.js";
-import User from "./views/User.js"
-import { UserEvent } from "./views/User.js";
+import Register, { RegisterEvent } from "./views/Register.js"
+import AccountInfo, { AccountInfoEvents }  from "./views/AccountInfo.js"
 
 /**
  * Returns the route object for a specific route based on the given URI
@@ -66,11 +63,11 @@ export default function router(URI) {
             title: 'Loading...',
         },
         '/user': {
-            returnView: User,
+            returnView: AccountInfo,
             state: {},
             uri: location.pathname,
-            title: 'User',
-            viewEvent: UserEvent
+            title: 'AccountInfo',
+            viewEvent: AccountInfoEvents
         }
     };
 

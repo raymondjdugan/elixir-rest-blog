@@ -1,4 +1,4 @@
-export default function User() {
+export default function AccountInfo() {
     //language=HTML
     return `
         <header>
@@ -62,7 +62,7 @@ const findUser = () => {
             return;
         }
 
-        fetch(`http://localhost:8081/api/users/${findby}?${findby}=${findUser}`)
+        fetch(`http://localhost:8080/api/users/${findby}?${findby}=${findUser}`)
             .then(results => results.json())
             .then(user => {
                 console.log(user)
@@ -89,14 +89,14 @@ const updateUser = _ => {
             body: JSON.stringify(updateInfo)
         }
 
-        fetch(`http://localhost:8081/api/users/${userId}`, userUpdateRequest)
+        fetch(`http://localhost:8080/api/users/${userId}`, userUpdateRequest)
             .then(res => console.log(res))
     })
 }
 
 
 
-export function UserEvent() {
+export function AccountInfoEvents() {
     findUser();
     updateUser();
 }

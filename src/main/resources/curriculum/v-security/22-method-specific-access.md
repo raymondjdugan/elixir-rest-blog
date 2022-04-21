@@ -55,7 +55,7 @@ For example:
 ```JAVA
     @PostMapping
     @PreAuthorize("!hasAuthority('USER')")
-    public void create(@RequestBody User newUser) {
+    public void create(@RequestBody AccountInfo newUser) {
         return repository.save(newUser);
     }
 ```

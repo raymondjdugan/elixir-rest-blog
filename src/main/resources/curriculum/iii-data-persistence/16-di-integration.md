@@ -62,7 +62,7 @@ Now THAT was easy, huh?
 1. Finish integrating `Post` repository/controller
 
 
-2. Follow the same pattern to integrate `User` repository/controller.
+2. Follow the same pattern to integrate `AccountInfo` repository/controller.
 
 
 3. If you need more acute querying for your endpoints, see [Data Persistence, Pt II](14-data-persistence-iii.md).
@@ -78,25 +78,25 @@ Now, it's time to spin up your application!
     - Run a SELECT statement to ensure they were created.
     
 
-2. Use a Fetch POST request on `/api/users` to create a few `User` records and verify they are in the database.
+2. Use a Fetch POST request on `/api/users` to create a few `AccountInfo` records and verify they are in the database.
 
 
 3. Then, use another POST request to create Posts.
-    - Keep in mind that you MUST have an existing `User` associated with the post
+    - Keep in mind that you MUST have an existing `AccountInfo` associated with the post
     - Also, make sure to give each new `Post` a category
     
 **Things to test**:
 
-- What happens if I create a `Post` with no `User`?
+- What happens if I create a `Post` with no `AccountInfo`?
   
 
-- What happens if I create a `Post` with an invalid `User`?
+- What happens if I create a `Post` with an invalid `AccountInfo`?
   
 
 - Create a `Post` with an invalid `Category`. What happens?
 
 
-- Can I delete a `User` which has `Post` records associated?
+- Can I delete a `AccountInfo` which has `Post` records associated?
     
 As always, test ***each*** endpoint and ensure the results are what you expect - both in the responses *and* in the database.
 

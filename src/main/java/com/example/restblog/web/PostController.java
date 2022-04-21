@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -29,8 +30,13 @@ public class PostController {
     }
 
     @GetMapping("{id}")
-    Post getOne(@PathVariable long id) {
-        return postRepository.getById(id);
+    Optional<Post> getOne(@PathVariable long id) {
+        return postRepository.findById(id);
+    }
+
+    @GetMapping("searchByCategory")
+    List<Post> searchByCategory(@RequestParam String category) {
+        return postRepository.findAllByCategories(categoryRepsitory.findByName(category));
     }
 
     @PostMapping
@@ -44,7 +50,7 @@ public class PostController {
         Post post = new Post();
         post.setTitle(newPost.getTitle());
         post.setContent(newPost.getContent());
-        post.setUser(author);
+        post.setAuthor(author);
         post.setCategories(categoriesList);
         postRepository.save(post);
     }

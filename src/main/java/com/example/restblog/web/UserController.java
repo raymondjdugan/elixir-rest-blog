@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -26,8 +27,8 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    User getSingleUser(@PathVariable long id) {
-        return userRepository.getById(id);
+    Optional<User> getSingleUser(@PathVariable long id) {
+        return userRepository.findById(id);
     }
 
     @GetMapping("username")

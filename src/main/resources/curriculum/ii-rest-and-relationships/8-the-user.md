@@ -1,6 +1,6 @@
-# The User
+# The AccountInfo
 
-## What is the `User`?
+## What is the `AccountInfo`?
 
 In many web applications, there are often two main ideas:
 
@@ -18,7 +18,7 @@ Now, we need to fill out #2: **Who interacts with the application and what can t
 
 ---
 
-## How to define the `User`
+## How to define the `AccountInfo`
 
 We need to think about ***necessary*** information on the user of our the application.
 
@@ -38,7 +38,7 @@ We need to think about ***necessary*** information on the user of our the applic
 - Over which content (Posts) do they have ownership?
 - How does a user validate access to our application (passwords)?
 
-For now, let's focus on the basics of our `User` by creating a model with a few key properties:
+For now, let's focus on the basics of our `AccountInfo` by creating a model with a few key properties:
 
 ---
 
@@ -48,12 +48,12 @@ For now, let's focus on the basics of our `User` by creating a model with a few 
 
 ---
 
-### FEA-5-A: Implement the `User` class
+### FEA-5-A: Implement the `AccountInfo` class
 
-#### 1. Inside the `data` package, create a class named `User`
+#### 1. Inside the `data` package, create a class named `AccountInfo`
 
 
-#### 2. Give the `User` the following private fields:
+#### 2. Give the `AccountInfo` the following private fields:
 
 - long id
 - String username
@@ -62,10 +62,10 @@ For now, let's focus on the basics of our `User` by creating a model with a few 
 - Date createdAt
 - Role role
 
-For our `Role`, we will create an `enum` inside the `User` class like so:
+For our `Role`, we will create an `enum` inside the `AccountInfo` class like so:
 
 ```JAVA
-public class User {
+public class AccountInfo {
 
     // ...Your fields above here
 
@@ -83,7 +83,7 @@ public class User {
 
 ### FEA-5-B: Implement the `UsersController`
 
-We can now set up a REST Controller for the purpose of running CRUD operations related to the `User`.
+We can now set up a REST Controller for the purpose of running CRUD operations related to the `AccountInfo`.
 
 ***After completing each method, be sure to test in Swagger***
 
@@ -99,7 +99,7 @@ We can now set up a REST Controller for the purpose of running CRUD operations r
     
 
 - Similarly, ***don't copypasta***. You will more than likely forget to replace one of those `Post` references
-      with `User`
+      with `AccountInfo`
       and waste your own time tracking down the issue.
 
 
@@ -107,7 +107,7 @@ We can now set up a REST Controller for the purpose of running CRUD operations r
 
 ---
 
-### FEA-5-C: Register the `User` Client-Side
+### FEA-5-C: Register the `AccountInfo` Client-Side
 
 `resources/static/js/views/Login.js`
 shows us how we can begin a view for creating users.
@@ -142,7 +142,7 @@ shows us how we can begin a view for creating users.
  - When the user submits the form, your JavaScript listens for that button click.
  - You will need to add an event listener to that button when it is rendered.
  - After the click, grab the input values from the DOM, bundle them together in an object which mimics the
-   backend `User` properties.
+   backend `AccountInfo` properties.
  - Do not worry with the `Role`, `Posts`, or `Id`. This is only for registration!
 
 Still in your `RegisterEvent` function, add this bit to the bottom:
@@ -179,14 +179,14 @@ const routes = {
 }
 ```
 
-Once you plug this in, you now need to add `/register` to the list of paths inside your `ViewController`. From that point you are ready to begin testing the creation of a `User`!
+Once you plug this in, you now need to add `/register` to the list of paths inside your `ViewController`. From that point you are ready to begin testing the creation of a `AccountInfo`!
 
-Check the `UsersController` to see if your new User is printed out on your `POST` method.
+Check the `UsersController` to see if your new AccountInfo is printed out on your `POST` method.
 
 ---
 
 
-*Looking forward, we need more than the ability to perform basic CRUD for our `User`.*
+*Looking forward, we need more than the ability to perform basic CRUD for our `AccountInfo`.*
 
-## Next Up: [The User, pt II](8a-the-user-pt-2.md)
+## Next Up: [The AccountInfo, pt II](8a-the-user-pt-2.md)
 

@@ -14,8 +14,8 @@ Relational Mapper) facilities of the JPA.
 An ORM lets us treat our relational data as if it is object-oriented. For
 example, instead of saying that we have a record for an post in the database and
 the post record has a column for `user_id` that identifies the user record who
-created the post, we can simply say that an `Post` object has a `User` property.
-Similarly, we will be able to say that a `User` object has a property `posts` that
+created the post, we can simply say that an `Post` object has a `AccountInfo` property.
+Similarly, we will be able to say that a `AccountInfo` object has a property `posts` that
 is a list of `Post` objects. This allows us to focus less on the database details
 and more on our application-specific logic.
 
@@ -23,7 +23,7 @@ and more on our application-specific logic.
 ## `@ManyToOne`
 
 Mapping a many-to-one relationship with JPA is as easy as adding the `@ManyToOne`
-annotation. Following our example, posts belong to a single `User`.
+annotation. Following our example, posts belong to a single `AccountInfo`.
 
 ```java
 @Entity
@@ -41,7 +41,7 @@ public class Post {
 
     @ManyToOne
     @JsonIgnoreProperties({"posts", "password"})
-    private User user;
+    private AccountInfo user;
 }
 ```
 
@@ -250,10 +250,10 @@ String username = post.getUser().getUsername();
 System.out.println(username);
 ```
 
-Here, we set the `User` before creating a `Post`:
+Here, we set the `AccountInfo` before creating a `Post`:
 
 ```java
-User user = userRepository.getOne(1L); // just use the first user in the db
+AccountInfo user = userRepository.getOne(1L); // just use the first user in the db
 Post post = new Post();
 post.setTitle("Why Use Spring?");
 post.setContent("Because OMG it makes development so much faster!");
@@ -269,7 +269,7 @@ The `id` column is auto-incrementing, so MySQL will take care of this!
 ### The following is a feature list to be implemented in your blog application:
 ## FEA-13: As a user, I can see previous posts with categories which have been published. 
 
-If you haven't yet, complete the conversion of `User`, `Post`, and `Category` to be entities.
+If you haven't yet, complete the conversion of `AccountInfo`, `Post`, and `Category` to be entities.
     
 - Use annotations in order to do this
     

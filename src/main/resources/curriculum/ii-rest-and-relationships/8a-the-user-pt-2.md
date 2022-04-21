@@ -9,18 +9,18 @@
 
 
 #### 2. `getByUsername()` listening on `/api/users/username`
-    - returns a `User`
+    - returns a `AccountInfo`
     - takes in `@RequestParam String username` as parameter
 
 
 #### 3. `getByEmail()` listening on `/api/users/email`
-    - returns a `User`
+    - returns a `AccountInfo`
     - takes in `@RequestParam String email` as parameter
 
 ---
-### FEA-6-C: Create client-side User view
+### FEA-6-C: Create client-side AccountInfo view
 
-#### 1. Inside `views`, create a new `User.js` file. Use this file to create a view for allowing the `User` to see/edit information about themselves.
+#### 1. Inside `views`, create a new `AccountInfo.js` file. Use this file to create a view for allowing the `AccountInfo` to see/edit information about themselves.
 - In your capstone project, this will be essential! So it's highly advisable that you attempt this view!
 
 
@@ -50,7 +50,7 @@ Create a `private` method `updatePassword()` listening on `{id}/updatePassword` 
    ```
 
 - With the above parameters, we can:
-    - obtain the `User` record
+    - obtain the `AccountInfo` record
     - check the old password against the new
     - ensure the new password meets our criteria.
 

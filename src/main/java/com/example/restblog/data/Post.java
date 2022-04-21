@@ -25,7 +25,7 @@ public class Post {
 
     @ManyToOne
     @JsonIgnoreProperties({"posts", "password"})
-    private User user;
+    private User author;
 
     @ManyToMany(
             fetch = FetchType.LAZY,

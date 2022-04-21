@@ -243,9 +243,9 @@ specific ad (`getOne`), inserting or updating an ad (`save`), and deleting an
 ad (`delete`).
 
 ---
-## FEA-6-F: Implement persistence for the `User`
+## FEA-6-F: Implement persistence for the `AccountInfo`
 
-1. Convert the `User` object to an Entity.
+1. Convert the `AccountInfo` object to an Entity.
 
 2. Inside the `data` package, create a `UserRepository` much like for `PostRepository`.
 

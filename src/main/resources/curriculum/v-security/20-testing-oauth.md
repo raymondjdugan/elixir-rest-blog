@@ -22,7 +22,7 @@ we will need to take a look at:
 ---
 ## TODO: Create the Access and Refresh Tokens
 
-In order to authenticate a `User` with our server, the `User` must actually exist and be given a role.
+In order to authenticate a `AccountInfo` with our server, the `AccountInfo` must actually exist and be given a role.
 
 1. After starting your application, navigate to `/login` in the browser.
 
