@@ -17,7 +17,7 @@ export default function PostIndex(props) {
                 ${getPosts(props)}
             </div>
             <form id="post-form" class="h-100 my-auto w-50 hidden">
-                <div class="text-center flex-grow-1">
+                <div class="text-center">
                     <h3>Create/Update Post</h3>
                     <label for="title" class="form-label"></label>
                     <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
