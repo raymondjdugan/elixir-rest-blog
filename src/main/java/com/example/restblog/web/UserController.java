@@ -2,11 +2,12 @@ package com.example.restblog.web;
 
 import com.example.restblog.data.User;
 import com.example.restblog.data.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +17,11 @@ import java.util.Optional;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -42,9 +45,12 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("!hasAuthority('USER')")
     void createUser(@RequestBody User newUser) {
-        newUser.setCreatedAt(LocalDate.now());
+        System.out.println(newUser.toString());
+        newUser.setCreatedAt(null);
         newUser.setRole(User.Role.USER);
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
     }
 

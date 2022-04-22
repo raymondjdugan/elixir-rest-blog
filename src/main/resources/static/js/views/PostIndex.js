@@ -16,7 +16,7 @@ export default function PostIndex(props) {
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
                 ${getPosts(props)}
             </div>
-            <form id="post-form" class="h-100 my-auto w-50 hidden">
+            <form id="post-form" class="h-100 w-50 hidden">
                 <div class="text-center">
                     <h3>Create/Update Post</h3>
                     <label for="title" class="form-label"></label>
@@ -74,8 +74,9 @@ const getPosts = (props) => {
 }
 
 const getFormCategories = _ => {
-    $.ajax("http://localhost:8080/api/categories", {method: 'GET'})
-        .done(r => {
+    fetch("http://localhost:8080/api/categories", {method: 'GET'})
+        .then(results => results.json())
+        .then(r => {
             r.forEach(cat => {
                 //language=HTML
                 let html = `

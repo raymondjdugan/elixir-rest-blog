@@ -1,9 +1,11 @@
 package com.example.restblog.web;
 
 import com.example.restblog.data.*;
+import com.example.restblog.services.EmailService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,7 @@ public class PostController {
     @PostMapping
     void createPost(@RequestBody Post newPost, @RequestParam String username, @RequestParam String[] categories){
         User author = userRepository.findByUsername(username);
-        System.out.println(categories);
+        System.out.println(Arrays.toString(categories));
         List<Category> categoriesList = new ArrayList<>();
         for (String category : categories) {
             categoriesList.add(categoryRepsitory.findByName(category));
@@ -53,6 +55,7 @@ public class PostController {
         post.setAuthor(author);
         post.setCategories(categoriesList);
         postRepository.save(post);
+        emailService.perpareAndSend(post,"New Post Created", "You created a new post");
     }
 
     @PutMapping("{id}")

@@ -62,7 +62,7 @@ export default function router(URI) {
             uri: location.pathname,
             title: 'Loading...',
         },
-        '/user': {
+        '/AccountInfo': {
             returnView: AccountInfo,
             state: {},
             uri: location.pathname,

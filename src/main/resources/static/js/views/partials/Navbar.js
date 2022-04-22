@@ -20,7 +20,7 @@ export default function Navbar(props) {
                         <a href="/register" data-link class="nav-link text-white">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/user" data-link class="nav-link text-white">User</a>
+                        <a href="/AccountInfo" data-link class="nav-link text-white">Account Information</a>
                     </li>
                 </ul>
             </nav>

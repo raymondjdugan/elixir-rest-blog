@@ -1,4 +1,4 @@
-package com.example.restblog.web;
+package com.example.restblog.services;
 
 import com.example.restblog.data.Post;
 import org.springframework.beans.factory.annotation.Autowired;

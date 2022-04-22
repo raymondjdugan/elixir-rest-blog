@@ -1,6 +1,5 @@
 package com.example.restblog.security;
 
-
 import com.example.restblog.data.User;
 import com.example.restblog.data.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,15 +14,15 @@ import java.util.Arrays;
 @Service
 public class UserService implements UserDetailsService {
 
-    public final UserRepository userRepository;
+    private final UserRepository repository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.findByEmail(email);
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Arrays.asList(authority));
     }

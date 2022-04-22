@@ -26,29 +26,26 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        // TODO: Flesh out remaining secured endpoints
         http
+                .cors()
+                .and()
+                .csrf()
+                .disable()
                 .formLogin()
                 .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/users")
-                .hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/api/posts")
-                .permitAll()
-                .antMatchers("/**")
-                .hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/swagger-ui/**", "/v3/api-docs/**")
-                .permitAll()
-                .antMatchers("/api/users/create")
-                .permitAll()
-                .antMatchers("/**")
-                .permitAll()
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/api/categories/**").permitAll()
+                .antMatchers("/api/posts/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/api/users/**").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(customAuthenticationEntryPoint)
-                .accessDeniedHandler(new CustomAccessDeniedHandler());
+                .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint).accessDeniedHandler(new CustomAccessDeniedHandler());
     }
 }
