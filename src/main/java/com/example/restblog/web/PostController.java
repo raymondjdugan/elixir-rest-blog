@@ -2,6 +2,7 @@ package com.example.restblog.web;
 
 import com.example.restblog.data.*;
 import com.example.restblog.services.EmailService;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class PostController {
         this.emailService = emailService;
     }
 
-    @GetMapping
+    @GetMapping("getAll")
     List<Post> getAll() {
         return postRepository.findAll();
     }
@@ -42,8 +43,9 @@ public class PostController {
     }
 
     @PostMapping
-    void createPost(@RequestBody Post newPost, @RequestParam String username, @RequestParam String[] categories){
-        User author = userRepository.findByUsername(username);
+    void createPost(@RequestBody Post newPost, @RequestParam String[] categories, OAuth2Authentication auth){
+        String email = auth.getName();
+        User author = userRepository.findByEmail(email);
         System.out.println(Arrays.toString(categories));
         List<Category> categoriesList = new ArrayList<>();
         for (String category : categories) {

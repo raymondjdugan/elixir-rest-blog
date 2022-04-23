@@ -33,6 +33,7 @@ export default function PostIndex(props) {
     `;
 }
 
+
 const loggedIn = "Ray"
 
 const showForm = () => {
@@ -72,7 +73,16 @@ const getPosts = (props) => {
             </div>
         `).join('')
 }
-
+const searchByCategory = _ => {
+    $("#search-by-category").change(() => {
+        const category = $("#search-by-category").val()
+        fetch(`${BASE}/searchByCategory?category=${category}`)
+            .then(results => results.json())
+            .then(posts => {
+                console.log(posts)
+            })
+    })
+}
 const getFormCategories = _ => {
     fetch("http://localhost:8080/api/categories", {method: 'GET'})
         .then(results => results.json())
@@ -104,7 +114,7 @@ const createPost = _ => {
         body: JSON.stringify(newPost)
     }
 
-    fetch(`http://localhost:8080/api/posts?username=${loggedIn}&categories=${categories}`, postRequest)
+    fetch(`http://localhost:8080/api/posts?categories=${categories}`, postRequest)
         .then(res => {
             console.log(res.status)
             createView("/posts")
@@ -167,17 +177,8 @@ const clearForm = _ => {
     })
 }
 
-const searchByCategory = _ => {
-    $("#search-by-category").change(() => {
-        const category = $("#search-by-category").val()
-        fetch(`${BASE}/searchByCategory?category=${category}`)
-            .then(results => results.json())
-            .then(posts => {
-                PostIndex(posts)
-                createView("/posts")
-            })
-    })
-}
+
+
 $("#post-form").scroll(function () {
     $(this).scroll({top: window.scrollY})
 })

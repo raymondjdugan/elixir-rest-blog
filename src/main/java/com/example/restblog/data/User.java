@@ -2,6 +2,8 @@ package com.example.restblog.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,7 +19,8 @@ import java.util.Collection;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
     public enum Role {USER, ADMIN};
 
@@ -39,6 +42,7 @@ public class User {
     private String password;
 
     @Column
+    @CreatedDate
     private LocalDate createdAt;
 
     @NotNull

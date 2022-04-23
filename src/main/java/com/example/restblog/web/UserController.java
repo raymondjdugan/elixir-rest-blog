@@ -44,11 +44,11 @@ public class UserController {
         return userRepository.findByEmail(email);
     }
 
-    @PostMapping
-    @PreAuthorize("!hasAuthority('USER')")
+    @PostMapping("/create")
+    @PreAuthorize("!hasAuthority('USER') && !hasAuthority('ADMIN')")
+
     void createUser(@RequestBody User newUser) {
         System.out.println(newUser.toString());
-        newUser.setCreatedAt(null);
         newUser.setRole(User.Role.USER);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
@@ -61,6 +61,7 @@ public class UserController {
     }
 
     @PutMapping("{id}/updatePassword")
+    @PreAuthorize("!hasAuthority('USER') || (#oldPassword != null && !#oldPassword.isEmpty())")
     void updatePassword(@PathVariable Long id, @RequestParam(required = false) String oldPassword,
                         @Valid @Size(min = 3) @RequestParam String newPassword
     ) {

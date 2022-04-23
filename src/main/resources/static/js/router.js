@@ -38,7 +38,7 @@ export default function router(URI) {
         '/posts': {
             returnView: PostIndex,
             state: {
-                posts: '/api/posts'
+                posts: '/api/posts/getAll'
             },
             uri: '/posts',
             title: 'All Posts',
