@@ -27,7 +27,7 @@ public class PostController {
         this.emailService = emailService;
     }
 
-    @GetMapping("getAll")
+    @GetMapping
     List<Post> getAll() {
         return postRepository.findAll();
     }
@@ -40,6 +40,11 @@ public class PostController {
     @GetMapping("searchByCategory")
     List<Post> searchByCategory(@RequestParam String category) {
         return postRepository.findAllByCategories(categoryRepsitory.findByName(category));
+    }
+
+    @GetMapping("getByUser")
+    List<Post> searchByUser(OAuth2Authentication auth) {
+        return postRepository.findAllByAuthor(userRepository.findByEmail(auth.getName()));
     }
 
     @PostMapping
@@ -78,8 +83,10 @@ public class PostController {
     }
 
     @DeleteMapping("{id}")
-    void deletePost(@PathVariable long id){
-        postRepository.deleteById(id);
+    void deletePost(@PathVariable long id, OAuth2Authentication auth){
+        if (postRepository.getById(id).getAuthor().getEmail().equals(auth.getName())) {
+            postRepository.deleteById(id);
+        }
     }
 }
 

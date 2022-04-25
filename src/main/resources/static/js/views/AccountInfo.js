@@ -1,3 +1,5 @@
+import { getToken } from "../auth.js";
+
 export default function AccountInfo() {
     //language=HTML
     return `
@@ -47,6 +49,20 @@ export default function AccountInfo() {
     `
 }
 let userId = null;
+
+const getCurrentUser = _ => {
+    fetch(`http://localhost:8080/api/users/currentUser`, {headers: {Authorization: getToken()}})
+        .then(results => results.json())
+        .then(user => {
+            console.log(user)
+            $("#username").val(user.username)
+            $("#email").val(user.email)
+            $("#createdAt").val(user.createdAt)
+            $("#role").val(user.role?.toLowerCase())
+
+            userId = user.id;
+        })
+}
 
 const findUser = () => {
     $("#find").click(() => {
@@ -99,4 +115,5 @@ const updateUser = _ => {
 export function AccountInfoEvents() {
     findUser();
     updateUser();
+    getCurrentUser()
 }

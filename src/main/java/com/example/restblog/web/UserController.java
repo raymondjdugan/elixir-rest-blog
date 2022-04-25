@@ -4,6 +4,7 @@ import com.example.restblog.data.User;
 import com.example.restblog.data.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,9 +45,13 @@ public class UserController {
         return userRepository.findByEmail(email);
     }
 
-    @PostMapping("/create")
-    @PreAuthorize("!hasAuthority('USER') && !hasAuthority('ADMIN')")
+    @GetMapping("currentUser")
+    User getCurrentUser(OAuth2Authentication auth) {
+        return userRepository.findByEmail(auth.getName());
+    }
 
+    @PostMapping("create")
+    @PreAuthorize("!hasAuthority('USER') && !hasAuthority('ADMIN')")
     void createUser(@RequestBody User newUser) {
         System.out.println(newUser.toString());
         newUser.setRole(User.Role.USER);

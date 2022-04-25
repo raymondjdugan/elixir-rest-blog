@@ -4,9 +4,11 @@ import About from "./views/About.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
 import Login from "./views/Login.js";
+import Logout from "./views/Logout.js";
 import LoginEvent from "./auth.js";
 import Register, { RegisterEvent } from "./views/Register.js"
 import AccountInfo, { AccountInfoEvents }  from "./views/AccountInfo.js"
+import UserPosts, {UserPostsEvent} from "./views/UserPosts.js";
 
 /**
  * Returns the route object for a specific route based on the given URI
@@ -28,6 +30,13 @@ export default function router(URI) {
             title: "Login",
             viewEvent: LoginEvent
         },
+        '/logout': {
+            returnView: Home,
+            state: {},
+            uri: '/logout',
+            title: "logout",
+            viewEvent: Logout
+        },
         '/register': {
             returnView: Register,
             state: {},
@@ -38,11 +47,20 @@ export default function router(URI) {
         '/posts': {
             returnView: PostIndex,
             state: {
-                posts: '/api/posts/getAll'
+                posts: '/api/posts'
             },
             uri: '/posts',
             title: 'All Posts',
             viewEvent: PostsEvent
+        },
+        '/userPosts': {
+            returnView: UserPosts,
+            state: {
+                posts: '/api/posts'
+            },
+            uri: '/userPosts',
+            title: 'My Posts',
+            viewEvent: UserPostsEvent
         },
         '/about': {
             returnView: About,
@@ -65,7 +83,7 @@ export default function router(URI) {
         '/AccountInfo': {
             returnView: AccountInfo,
             state: {},
-            uri: location.pathname,
+            uri: "users/currentUser",
             title: 'AccountInfo',
             viewEvent: AccountInfoEvents
         }
