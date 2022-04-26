@@ -36,7 +36,7 @@ export default function Navbar(props) {
                 <a href="/userPosts" data-link class="nav-link text-white">My Posts</a>
             </li>
             <li class="nav-item">
-                <a href="/AccountInfo" data-link class="nav-link text-white">Account Information</a>
+                <a href="/accountInfo" data-link class="nav-link text-white">Account Information</a>
             </li>`
     }
     //language=HTML

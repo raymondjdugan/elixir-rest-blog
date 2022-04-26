@@ -8,7 +8,7 @@ import Logout from "./views/Logout.js";
 import LoginEvent from "./auth.js";
 import Register, { RegisterEvent } from "./views/Register.js"
 import AccountInfo, { AccountInfoEvents }  from "./views/AccountInfo.js"
-import UserPosts, {UserPostsEvent} from "./views/UserPosts.js";
+import UserPosts, { UserPostsEvent } from "./views/UserPosts.js";
 
 /**
  * Returns the route object for a specific route based on the given URI
@@ -55,9 +55,7 @@ export default function router(URI) {
         },
         '/userPosts': {
             returnView: UserPosts,
-            state: {
-                posts: '/api/posts'
-            },
+            state: {},
             uri: '/userPosts',
             title: 'My Posts',
             viewEvent: UserPostsEvent
@@ -80,7 +78,7 @@ export default function router(URI) {
             uri: location.pathname,
             title: 'Loading...',
         },
-        '/AccountInfo': {
+        '/accountInfo': {
             returnView: AccountInfo,
             state: {},
             uri: "users/currentUser",
