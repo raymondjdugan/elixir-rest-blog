@@ -1,8 +1,11 @@
 import { getToken } from "../auth.js";
 import createView from "../createView.js";
 
-export default function AccountInfo() {
+let userId = null;
+
+export default function AccountInfo(props) {
     //language=HTML
+    userId = props.users.id
     return `
         <header>
             <h1 class="text-center">Account Information</h1>
@@ -21,17 +24,17 @@ export default function AccountInfo() {
                     <button class="btn btn-dark" type="button" id="find">Find User</button>
                 </div>
                 <label for="username" class="form-label text-center w-100">Username</label>
-                <input class="form-control" id="username" name="username" type="text"/>
+                <input class="form-control" id="username" name="username" type="text" value="${props.users.username}"/>
 
                 <label for="email" class="form-label text-center w-100">Email</label>
-                <input class="form-control" id="email" name="email" type="text"/>
+                <input class="form-control" id="email" name="email" type="text" value="${props.users.email}"/>
 
                 <fieldset>
                     <label for="role" class="form-label text-center w-100">Current Role</label>
-                    <input disabled class="form-control" id="role" name="role" type="text"/>
+                    <input disabled class="form-control" id="role" name="role" type="text" value="${props.users.role}"/>
 
                     <label for="createdAt" class="form-label text-center w-100">Date Created</label>
-                    <input disabled class="form-control" id="createdAt" name="createdAt" type="text"/>
+                    <input disabled class="form-control" id="createdAt" name="createdAt" type="text" value="${props.users.createdAt}"/>
                 </fieldset>
 
                 <button class="btn btn-dark mt-2" id="update-info">Update Information</button>
@@ -50,8 +53,6 @@ export default function AccountInfo() {
     `
 }
 
-let userId = null;
-
 const getUserRole = _ => {
     const token = localStorage.getItem(("access_token"))
     const user = JSON.parse(atob(token.split(".")[1]))
@@ -60,23 +61,6 @@ const getUserRole = _ => {
         $("#find-user").removeAttr("disabled")
         $("#role").removeAttr("disabled")
     }
-}
-
-const setUser = user => {
-    $("#username").val(user.username)
-    $("#email").val(user.email)
-    $("#createdAt").val(user.createdAt)
-    $("#role").val(user.role?.toLowerCase())
-
-    userId = user.id;
-}
-
-const getCurrentUser = _ => {
-    fetch(`http://localhost:8080/api/users/currentUser`, {headers: {Authorization: getToken()}})
-        .then(results => results.json())
-        .then(user => {
-            setUser(user);
-        })
 }
 
 const findUser = () => {
@@ -96,7 +80,12 @@ const findUser = () => {
         fetch(`http://localhost:8080/api/users/${findby}?${findby}=${findUser}`)
             .then(results => results.json())
             .then(user => {
-                setUser(user);
+                $("#username").val(user.username)
+                $("#email").val(user.email)
+                $("#createdAt").val(user.createdAt)
+                $("#role").val(user.role?.toLowerCase())
+
+                userId = user.id;
             })
     })
 }
@@ -142,7 +131,6 @@ const updatePassword = _ => {
 export function AccountInfoEvents() {
     findUser();
     updateUser();
-    getCurrentUser();
     updatePassword();
     getUserRole();
 }

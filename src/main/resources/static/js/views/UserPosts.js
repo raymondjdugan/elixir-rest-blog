@@ -7,7 +7,7 @@ export default function UserPosts(props) {
     return `
         <main class="d-flex mx-2 h-100 justify-content-center">
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
-
+                ${showUserPosts(props.posts)}
             </div>
             <form id="post-form" class="h-100 w-50">
                 <div class="text-center">
@@ -16,22 +16,16 @@ export default function UserPosts(props) {
                     <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
                     <label for="content" class="form-label"></label>
                     <textarea class="form-control" name="content" id="content" placeholder="Enter Content Here"></textarea>
+                    
                     <select class="form-select category-select" multiple id="category-select">
                     </select>
+                    
                     <button class="btn btn-primary mt-2" id="clear-btn" type="button">Clear</button>
                     <button class="btn btn-primary mt-2" id="submit-btn" type="button">Submit</button>
                 </div>
             </form>
         </main>
     `;
-}
-
-const getUserPosts = () => {
-    fetch("http://localhost:8080/api/posts/getByUser", {method: "GET", headers: {Authorization: getToken()}})
-        .then(results => results.json())
-        .then(posts => {
-            $("#posts-container").html(showUserPosts(posts))
-        })
 }
 
 const showUserPosts = (posts) => {
@@ -147,6 +141,5 @@ export function UserPostsEvent() {
     submit();
     deletePost();
     clearForm();
-    getUserPosts();
     getFormCategories();
 }

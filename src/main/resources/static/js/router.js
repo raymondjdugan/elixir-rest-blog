@@ -55,7 +55,9 @@ export default function router(URI) {
         },
         '/userPosts': {
             returnView: UserPosts,
-            state: {},
+            state: {
+                posts: '/api/posts/getByUser'
+            },
             uri: '/userPosts',
             title: 'My Posts',
             viewEvent: UserPostsEvent
@@ -80,8 +82,10 @@ export default function router(URI) {
         },
         '/accountInfo': {
             returnView: AccountInfo,
-            state: {},
-            uri: "users/currentUser",
+            state: {
+                users: '/api/users/currentUser'
+            },
+            uri: "/accountInfo",
             title: 'AccountInfo',
             viewEvent: AccountInfoEvents
         }
