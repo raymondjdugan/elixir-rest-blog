@@ -1,4 +1,4 @@
-import {getToken} from "../auth.js";
+import { getToken } from "../auth.js";
 import createView from "../createView.js";
 
 export default function AccountInfo() {
@@ -52,7 +52,7 @@ export default function AccountInfo() {
 
 let userId = null;
 
-function breakToken() {
+const getUserRole = _ => {
     const token = localStorage.getItem(("access_token"))
     const user = JSON.parse(atob(token.split(".")[1]))
     const [role] = user.authorities;
@@ -144,5 +144,5 @@ export function AccountInfoEvents() {
     updateUser();
     getCurrentUser();
     updatePassword();
-    breakToken();
+    getUserRole();
 }

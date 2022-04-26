@@ -1,6 +1,6 @@
 import createView from "../createView.js";
-import {getToken} from "../auth.js";
-import {getAuthor, getPostCategories, getFormCategories} from "../postFunctions.js";
+import { getToken } from "../auth.js";
+import { getAuthor, getPostCategories, getFormCategories } from "../postFunctions.js";
 
 export default function UserPosts(props) {
     // language=HTML
