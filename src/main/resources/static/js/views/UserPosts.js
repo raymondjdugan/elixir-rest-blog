@@ -5,8 +5,6 @@ import {getAuthor, getPostCategories, getFormCategories} from "../postFunctions.
 export default function UserPosts(props) {
     // language=HTML
     return `
-        <header class=""
-        </header>
         <main class="d-flex mx-2 h-100 justify-content-center">
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
 

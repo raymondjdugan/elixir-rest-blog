@@ -31,7 +31,7 @@ export default function AccountInfo() {
                     <input disabled class="form-control" id="role" name="role" type="text"/>
 
                     <label for="createdAt" class="form-label text-center w-100">Date Created</label>
-                    <input class="form-control" id="createdAt" name="createdAt" type="text"/>
+                    <input disabled class="form-control" id="createdAt" name="createdAt" type="text"/>
                 </fieldset>
 
                 <button class="btn btn-dark mt-2" id="update-info">Update Information</button>
