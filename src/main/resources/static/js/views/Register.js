@@ -15,6 +15,7 @@ export default function Register(props) {
         </header>
         <main class="d-flex justify-content-center">
             <form class="d-flex flex-column w-25" id="register-form">
+                <div class="text-center text-danger" id="register-error-message"></div>
                 <label class="form-label" for="username">Username</label>
                 <input class="form-control" id="username" name="username" type="text"/>
                 <label class="form-label" for="email">Email</label>
@@ -37,8 +38,12 @@ export function RegisterEvent() {
             email: $("#email").val(),
             password: $("#password").val()
         }
-
-        console.log(newUser);
+        for (let value of Object.values(newUser)) {
+            if (value === "") {
+                $("#register-error-message").html("Please Fill Out All Fields.")
+                return
+            }
+        }
 
         let request = {
             method: "POST",
@@ -48,7 +53,10 @@ export function RegisterEvent() {
 
         fetch("http://localhost:8080/api/users/create", request)
             .then(response => {
-                console.log(response.status);
+                if (response.status === 500) {
+                    $("#register-error-message").html("That email already exists.")
+                    return
+                }
                 CreateView("/");
             })
     })

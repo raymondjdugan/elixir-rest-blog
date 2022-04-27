@@ -9,7 +9,6 @@ export function getPostCategories(categoriesArray) {
     return html;
 }
 
-
 export function showFormCategories(categories) {
     let html = "";
     categories.forEach(category => {
