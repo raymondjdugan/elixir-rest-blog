@@ -1,28 +1,28 @@
 import createView from "../createView.js";
-import { getToken } from "../auth.js";
-import { getAuthor, getPostCategories, showFormCategories } from "../postFunctions.js";
+import {getToken} from "../auth.js";
+import {getAuthor, getPostCategories, showFormCategories} from "../postFunctions.js";
 
 export default function UserPosts(props) {
     // language=HTML
     return `
-        <main class="d-flex mx-2 h-100 justify-content-center">
+        <main class="d-flex mx-2 h-100">
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
                 ${showUserPosts(props.posts, props.categories)}
             </div>
             <form id="post-form" class="h-100 w-50">
-                <div class="text-center">
+                <div id="form-scroll" class="text-center">
                     <h3>Create/Update Post</h3>
                     <label for="title" class="form-label"></label>
                     <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
-                    
-                    <divv class="d-flex" >
-                            <textarea class="form-control w-75" name="content" id="content" placeholder="Enter Content Here"></textarea>
-                        
-                            <select class="form-select w-25" multiple id="category-select">
-                                ${showFormCategories(props.categories)}
-                            </select>
+
+                    <divv class="d-flex">
+                        <textarea class="form-control w-75" name="content" id="content" placeholder="Enter Content Here"></textarea>
+
+                        <select class="form-select w-25" multiple id="category-select">
+                            ${showFormCategories(props.categories)}
+                        </select>
                     </divv>
-                    
+
                     <button class="btn btn-primary mt-2" id="clear-btn" type="button">Clear</button>
                     <button class="btn btn-primary mt-2" id="submit-btn" type="button">Submit</button>
                 </div>
@@ -31,7 +31,9 @@ export default function UserPosts(props) {
     `;
 }
 
-const showUserPosts = (posts, categories) => {
+let id = null;
+
+const showUserPosts = (posts) => {
     //language=HTML
     return posts.map(post =>
         `
@@ -55,7 +57,6 @@ const showUserPosts = (posts, categories) => {
 }
 
 const submit = _ => {
-    let id = null;
     $("main").click((e) => {
         if (e.target.classList.contains("edit-btn")) {
             id = e.target.getAttribute("data-id")
@@ -95,6 +96,7 @@ const createPost = _ => {
 }
 
 const editPost = id => {
+    setScroll()
     let categories = $("#category-select").val();
     const updatePost = {
         title: $("#title").val(),
@@ -137,6 +139,14 @@ const clearForm = _ => {
     $("#clear-btn").click(_ => {
         $("#title").val("")
         $("#content").val("")
+        id = null
+    })
+}
+
+const setScroll = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     })
 }
 
