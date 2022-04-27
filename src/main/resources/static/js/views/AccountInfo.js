@@ -1,4 +1,4 @@
-import { getToken } from "../auth.js";
+import {getToken} from "../auth.js";
 import createView from "../createView.js";
 
 let userId = null;
@@ -43,9 +43,14 @@ export default function AccountInfo(props) {
             <form class="mt-2">
                 <label for="current-password" class="form-label text-center w-100">Current Password</label>
                 <input class="form-control" id="current-password" name="current-password" type="text"/>
-
+                
+                <div class="text-danger text-center" id="error-message"></div>
+                
                 <label for="new-password" class="form-label text-center w-100">New Password</label>
                 <input class="form-control" id="new-password" name="new-password" type="text"/>
+
+                <label for="confirm-new-password" class="form-label text-center w-100">Confirm New Password</label>
+                <input class="form-control" id="confirm-new-password" name="confirm-new-password" type="text"/>
 
                 <button class="btn btn-dark mt-2" id="change-pwd">Update Password</button>
             </form>
@@ -116,15 +121,21 @@ const updatePassword = _ => {
     $("#change-pwd").click(e => {
         const curPass = $("#current-password").val()
         const newPass = $("#new-password").val()
-        let updatePasswordRequest = {
-            method: "PUT",
-            headers: {Authorization: getToken()}
+        const confirmNewPass = $("#confirm-new-password").val()
+
+        if (newPass === confirmNewPass) {
+            let updatePasswordRequest = {
+                method: "PUT",
+                headers: {Authorization: getToken()}
+            }
+            fetch(`http://localhost:8080/api/users/updatePassword?currentPassword=${curPass}&newPassword=${newPass}`, updatePasswordRequest)
+                .then(_ => {
+                    localStorage.clear();
+                    createView("/")
+                })
+        } else {
+            $("#error-message").html("Passwords Do Not Match.")
         }
-        fetch(`http://localhost:8080/api/users/${userId}/updatePassword?currentPassword=${curPass}&newPassword=${newPass}`, updatePasswordRequest)
-            .then(_ => {
-                localStorage.clear();
-                createView("/")
-            })
     })
 }
 

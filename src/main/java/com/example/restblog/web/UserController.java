@@ -69,12 +69,12 @@ public class UserController {
         userRepository.save(currentUser);
     }
 
-    @PutMapping("{id}/updatePassword")
+    @PutMapping("updatePassword")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN') || (#currentPassword != null && !#currentPassword.isEmpty())")
-    void updatePassword(@PathVariable Long id, @RequestParam String currentPassword,@Valid @Size(min = 3) @RequestParam String newPassword
+    void updatePassword(@RequestParam String currentPassword, @Valid @Size(min = 3) @RequestParam String newPassword, OAuth2Authentication authUser
     ) {
         if (!currentPassword.equals(newPassword)) {
-            User currentUser = userRepository.getById(id);
+            User currentUser = userRepository.findByEmail(authUser.getName());
             currentUser.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(currentUser);
         }

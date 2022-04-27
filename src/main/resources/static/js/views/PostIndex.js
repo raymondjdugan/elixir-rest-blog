@@ -3,6 +3,7 @@ import createView from "../createView.js";
 
 
 export default function PostIndex(props) {
+    console.log(props)
     // language=HTML
     return `
         <header class="d-flex justify-content-end">
