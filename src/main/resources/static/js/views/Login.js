@@ -12,6 +12,7 @@ export default function Login(props) {
     </header>
     <main class="d-flex justify-content-center">
         <form id="login-form" class="d-flex flex-column w-25">
+            <div class="text-center text-danger" id="log-error-message"></div>
             <label class="form-label" for="username">Username</label>
             <input class="form-control" id="username" name="username" type="text"/>
             <label class="form-label" for="password">Password</label>

@@ -29,6 +29,10 @@ export default function addLoginEvent() {
                 route: `/oauth/token`
             },
             request).then((data) => {
+            if (data.route.error === 'invalid_grant') {
+                $("#log-error-message").html("Invalid Credentials. Please Try Again")
+                return
+            }
             setTokens(data);
             createView("/");
         });

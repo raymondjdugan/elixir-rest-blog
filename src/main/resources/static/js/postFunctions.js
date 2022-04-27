@@ -1,7 +1,4 @@
-import createView from "./createView.js";
-import {isLoggedIn} from "./auth.js";
-
-export function getAuthor(author)  {
+export function getAuthor(author) {
     return author === null ? "Author Not Found" : author.username;
 }
 
@@ -13,16 +10,11 @@ export function getPostCategories(categoriesArray) {
 }
 
 
-export function getFormCategories() {
-    fetch("http://localhost:8080/api/categories", {method: 'GET'})
-        .then(results => results.json())
-        .then(categories => {
-            categories.forEach(category => {
-                //language=HTML
-                let html = `
-                    <option value="${category.name}">${category.name}</option>
-                `
-                $(".category-select").append(html)
-            })
-        })
+export function showFormCategories(categories) {
+    let html = "";
+    categories.forEach(category => {
+        //language=HTML
+        html += `<option value="${category.name}">${category.name}</option>`
+    })
+    return html
 }

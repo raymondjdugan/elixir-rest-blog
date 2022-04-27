@@ -1,9 +1,8 @@
-import { getAuthor, getFormCategories, getPostCategories} from "../postFunctions.js";
+import { getAuthor, getPostCategories, showFormCategories} from "../postFunctions.js";
 import createView from "../createView.js";
 
 
 export default function PostIndex(props) {
-    console.log(props)
     // language=HTML
     return `
         <header class="d-flex justify-content-end">
@@ -11,6 +10,7 @@ export default function PostIndex(props) {
                 <select class="form-select category-select" id="search-by-category">
                     <option value="" disabled selected>Select Category To Search By</option>
                     <option value="All" >All Posts</option>
+                    ${showFormCategories(props.categories)}
                 </select>
             </form>
         </header>
@@ -35,7 +35,7 @@ export default function PostIndex(props) {
     `;
 }
 
-export function getPosts(posts) {
+const getPosts = (posts) => {
     //language=HTML
     return posts.map(post =>
         `
@@ -69,5 +69,4 @@ const searchByCategory = _ =>{
 
 export function PostsEvent() {
     searchByCategory();
-    getFormCategories();
 }

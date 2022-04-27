@@ -1,24 +1,27 @@
 import createView from "../createView.js";
 import { getToken } from "../auth.js";
-import { getAuthor, getPostCategories, getFormCategories } from "../postFunctions.js";
+import { getAuthor, getPostCategories, showFormCategories } from "../postFunctions.js";
 
 export default function UserPosts(props) {
     // language=HTML
     return `
         <main class="d-flex mx-2 h-100 justify-content-center">
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
-                ${showUserPosts(props.posts)}
+                ${showUserPosts(props.posts, props.categories)}
             </div>
             <form id="post-form" class="h-100 w-50">
                 <div class="text-center">
                     <h3>Create/Update Post</h3>
                     <label for="title" class="form-label"></label>
                     <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
-                    <label for="content" class="form-label"></label>
-                    <textarea class="form-control" name="content" id="content" placeholder="Enter Content Here"></textarea>
                     
-                    <select class="form-select category-select" multiple id="category-select">
-                    </select>
+                    <divv class="d-flex" >
+                            <textarea class="form-control w-75" name="content" id="content" placeholder="Enter Content Here"></textarea>
+                        
+                            <select class="form-select w-25" multiple id="category-select">
+                                ${showFormCategories(props.categories)}
+                            </select>
+                    </divv>
                     
                     <button class="btn btn-primary mt-2" id="clear-btn" type="button">Clear</button>
                     <button class="btn btn-primary mt-2" id="submit-btn" type="button">Submit</button>
@@ -28,7 +31,7 @@ export default function UserPosts(props) {
     `;
 }
 
-const showUserPosts = (posts) => {
+const showUserPosts = (posts, categories) => {
     //language=HTML
     return posts.map(post =>
         `
@@ -141,5 +144,4 @@ export function UserPostsEvent() {
     submit();
     deletePost();
     clearForm();
-    getFormCategories();
 }
