@@ -1,4 +1,5 @@
-import {searchByCategory, getAuthor, getFormCategories, getPostCategories} from "../postFunctions.js";
+import { getAuthor, getPostCategories, showFormCategories} from "../postFunctions.js";
+import createView from "../createView.js";
 
 
 export default function PostIndex(props) {
@@ -8,7 +9,8 @@ export default function PostIndex(props) {
             <form class="w-25 my-3 mr-2">
                 <select class="form-select category-select" id="search-by-category">
                     <option value="" disabled selected>Select Category To Search By</option>
-                    <option value="" disabled selected>Select Category To Search By</option>
+                    <option value="All" >All Posts</option>
+                    ${showFormCategories(props.categories)}
                 </select>
             </form>
         </header>
@@ -33,7 +35,7 @@ export default function PostIndex(props) {
     `;
 }
 
-export function getPosts(posts) {
+const getPosts = (posts) => {
     //language=HTML
     return posts.map(post =>
         `
@@ -50,7 +52,21 @@ export function getPosts(posts) {
         `).join('')
 }
 
+const searchByCategory = _ =>{
+    $("#search-by-category").change(() => {
+        const category = $("#search-by-category").val()
+        if (category === 'All') {
+            createView("/posts")
+        } else {
+            fetch(`http://localhost:8080/api/posts/searchByCategory?category=${category}`)
+                .then(results => results.json())
+                .then(posts => {
+                    $("#posts-container").html(`${getPosts(posts)}`)
+                })
+        }
+    })
+}
+
 export function PostsEvent() {
     searchByCategory();
-    getFormCategories();
 }

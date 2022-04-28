@@ -61,21 +61,27 @@ public class UserController {
 
     @PutMapping("{id}")
     void updateUser(@PathVariable long id, @RequestBody User updateUser) {
-        System.out.println(id);
-        System.out.println(updateUser.toString());
+        System.out.println(updateUser);
+        User currentUser = userRepository.getById(id);
+        currentUser.setUsername(updateUser.getUsername());
+        currentUser.setEmail(updateUser.getEmail());
+        currentUser.setRole(updateUser.getRole());
+        userRepository.save(currentUser);
     }
 
-    @PutMapping("{id}/updatePassword")
-    @PreAuthorize("!hasAuthority('USER') || (#oldPassword != null && !#oldPassword.isEmpty())")
-    void updatePassword(@PathVariable Long id, @RequestParam(required = false) String oldPassword,
-                        @Valid @Size(min = 3) @RequestParam String newPassword
+    @PutMapping("updatePassword")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN') || (#currentPassword != null && !#currentPassword.isEmpty())")
+    void updatePassword(@RequestParam String currentPassword, @Valid @Size(min = 3) @RequestParam String newPassword, OAuth2Authentication authUser
     ) {
-
+        if (!currentPassword.equals(newPassword)) {
+            User currentUser = userRepository.findByEmail(authUser.getName());
+            currentUser.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(currentUser);
+        }
     }
 
     @DeleteMapping("{id}")
     void deleteUser(@PathVariable long id) {
         userRepository.deleteById(id);
     }
-
 }
