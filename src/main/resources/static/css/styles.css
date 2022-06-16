@@ -34,3 +34,8 @@
     display: none;
 }
 
+.btn-primary:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+

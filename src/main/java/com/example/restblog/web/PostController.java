@@ -1,12 +1,12 @@
 package com.example.restblog.web;
 
+import com.example.restblog.DTO.NewPostDTO;
 import com.example.restblog.data.*;
 import com.example.restblog.services.EmailService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,21 +48,20 @@ public class PostController {
     }
 
     @PostMapping
-    void createPost(@RequestBody Post newPost, @RequestParam String[] categories, OAuth2Authentication auth){
-        String email = auth.getName();
-        User author = userRepository.findByEmail(email);
-        System.out.println(Arrays.toString(categories));
+    void createPost(@RequestBody NewPostDTO newPostDTO, OAuth2Authentication loggedInUser){
+        System.out.println(newPostDTO);
+        User author = userRepository.findByEmail(loggedInUser.getName());
         List<Category> categoriesList = new ArrayList<>();
-        for (String category : categories) {
+        for (String category : newPostDTO.getCategories()) {
             categoriesList.add(categoryRepsitory.findByName(category));
         }
-        Post post = new Post();
-        post.setTitle(newPost.getTitle());
-        post.setContent(newPost.getContent());
-        post.setAuthor(author);
-        post.setCategories(categoriesList);
-        postRepository.save(post);
-        emailService.perpareAndSend(post,"New Post Created", "You created a new post");
+        Post newPost = new Post();
+        newPost.setTitle(newPostDTO.getTitle());
+        newPost.setContent(newPostDTO.getContent());
+        newPost.setAuthor(author);
+        newPost.setCategories(categoriesList);
+        postRepository.save(newPost);
+//        emailService.perpareAndSend(post,"New Post Created", "You created a new post");
     }
 
     @PutMapping("{id}")
