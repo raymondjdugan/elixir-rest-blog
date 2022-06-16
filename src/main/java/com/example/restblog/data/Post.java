@@ -39,6 +39,7 @@ public class Post {
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @JsonIgnoreProperties("posts")
+    @ToString.Exclude
     private Collection<Category> categories;
 
 }

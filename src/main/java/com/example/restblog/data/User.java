@@ -1,5 +1,6 @@
 package com.example.restblog.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -38,7 +39,7 @@ public class User {
 
     @NotNull
     @ToString.Exclude
-//    @JsonIgnore
+    @JsonIgnore
     private String password;
 
     @Column

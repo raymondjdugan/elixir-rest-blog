@@ -1,11 +1,12 @@
 import createView from "../createView.js";
-import {getToken} from "../auth.js";
+import {getToken, getHeaders} from "../auth.js";
 import {getAuthor, getPostCategories, showFormCategories} from "../postFunctions.js";
+import fetchData from "../fetchData.js";
 
 export default function UserPosts(props) {
     // language=HTML
     return `
-        <main class="d-flex mx-2 h-100">
+        <div class="d-flex mx-2 h-100">
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
                 ${showUserPosts(props.posts, props.categories)}
             </div>
@@ -27,12 +28,9 @@ export default function UserPosts(props) {
                     <button class="btn btn-primary mt-2" id="submit-btn" type="button">Submit</button>
                 </div>
             </form>
-        </main>
+        </div>
     `;
 }
-
-let id = null;
-
 const showUserPosts = (posts) => {
     //language=HTML
     return posts.map(post =>
@@ -57,7 +55,9 @@ const showUserPosts = (posts) => {
 }
 
 const submit = _ => {
-    $("main").click((e) => {
+    let id = null;
+
+    $("posts-container").click((e) => {
         if (e.target.classList.contains("edit-btn")) {
             id = e.target.getAttribute("data-id")
             $("#title").val($(`#title-${id}`).html())
@@ -78,21 +78,14 @@ const createPost = _ => {
 
     let postRequest = {
         method: "POST",
-        headers: {
-            Authorization: `${getToken()}`,
-            "Content-Type": 'application/json'
-        },
+        headers: getHeaders(),
         body: JSON.stringify(newPost)
     }
-
-    fetch(`http://localhost:8080/api/posts?categories=${categories}`, postRequest)
+    fetchData({server: `/api/posts?categories=${categories}`}, postRequest)
         .then(res => {
             console.log(res.status)
             createView("/userPosts")
-        }).catch(error => {
-        console.log(error);
-        createView("/userPosts");
-    });
+        })
 }
 
 const editPost = id => {
@@ -105,32 +98,27 @@ const editPost = id => {
 
     const editRequest = {
         method: "PUT",
-        headers: {
-            Authorization: getToken(),
-            "Content-Type": "application/json"
-        },
+        headers: getHeaders(),
         body: JSON.stringify(updatePost)
     }
-
-    fetch(`http://localhost:8080/api/posts/${id}?categories=${categories}`, editRequest)
+    fetchData({server: `/api/posts/${id}?categories=${categories}`}, editRequest)
         .then(_ => {
             createView("/userPosts")
-        }).catch(_ => {
-        createView("/userPosts");
-    });
+        })
 }
 
 const deletePost = _ => {
     $("main").click((e) => {
+        let deleteRequest = {
+            method: "DELETE",
+            headers: getHeaders()
+        }
         if (e.target.classList.contains("del-btn")) {
             const index = parseInt((e.target.getAttribute("data-id")))
-            fetch(`http://localhost:8080/api/posts/${index}`, {method: "DELETE", headers: {Authorization: getToken()}})
-                .then(res => {
+            fetchData( {server: `/api/posts/${index}`}, deleteRequest)
+                .then(_ => {
                     createView("/userPosts")
-                }).catch(error => {
-                console.log(error);
-                createView("/userPosts");
-            });
+                })
         }
     });
 }
