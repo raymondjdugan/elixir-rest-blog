@@ -1,52 +1,66 @@
 import createView from "../createView.js";
-import {getToken} from "../auth.js";
+import {getHeaders} from "../auth.js";
 import {getAuthor, getPostCategories, showFormCategories} from "../postFunctions.js";
+import fetchData from "../fetchData.js";
 
 export default function UserPosts(props) {
     // language=HTML
     return `
-        <main class="d-flex mx-2 h-100">
+        <div id="pageContainer" class="d-flex flex-column align-items-center mx-2 h-100 position-relative">
+            <div class="w-50">
+                <button type="button" id="create-form" class="btn btn-primary mt-2 position-absolute top-0 end-0 mt-2">Create New Post</button>
+                <form id="post-form" class="hidden w-100">
+                    <div id="form-scroll" class="text-center">
+                        <label for="title" class="form-label"></label>
+                        <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
+                        <div class="d-flex">
+                            <textarea class="form-control w-75" name="content" id="content" placeholder="Enter Content Here"></textarea>
+                            <select class="form-select w-25" multiple id="category-select">
+                                ${showFormCategories(props.categories)}
+                            </select>
+                        </div>
+                        <button class="btn btn-primary mt-2" id="clear-form-btn" type="button">Clear Form</button>
+                        <button class="btn btn-primary mt-2" id="create-post-btn" type="button">Create Post</button>
+                    </div>
+                </form>
+            </div>
             <div id="posts-container" class="d-flex flex-column justify-content-between mb-auto w-50">
                 ${showUserPosts(props.posts, props.categories)}
             </div>
-            <form id="post-form" class="h-100 w-50">
-                <div id="form-scroll" class="text-center">
-                    <h3>Create/Update Post</h3>
-                    <label for="title" class="form-label"></label>
-                    <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
-
-                    <divv class="d-flex">
-                        <textarea class="form-control w-75" name="content" id="content" placeholder="Enter Content Here"></textarea>
-
-                        <select class="form-select w-25" multiple id="category-select">
-                            ${showFormCategories(props.categories)}
-                        </select>
-                    </divv>
-
-                    <button class="btn btn-primary mt-2" id="clear-btn" type="button">Clear</button>
-                    <button class="btn btn-primary mt-2" id="submit-btn" type="button">Submit</button>
-                </div>
-            </form>
-        </main>
+        </div>
     `;
 }
-
-let id = null;
-
-const showUserPosts = (posts) => {
+const showUserPosts = (posts, categories) => {
     //language=HTML
     return posts.map(post =>
         `
-            <div class="post-container card mx-1 mb-2 text-dark bg-transparent border-0">
-                <h3 id="title-${post.id}" class="card-title">${post.title}</h3>
-                <p id="content-${post.id}" class="card-body">${post.content}</p>
-                <div class="d-flex justify-content-end">${getPostCategories(post.categories)}</div>
+            <div data-id="${post.id}" class="post-container card mx-1 mb-2 text-dark bg-transparent border-0">
+                <div class="post">
+                    <h3 id="title-${post.id}" class="card-title">${post.title}</h3>
+                    <p id="content-${post.id}" class="card-body">${post.content}</p>
+                    <div class="d-flex justify-content-end">${getPostCategories(post.categories)}</div>
+                </div>
+                <div data-id="${post.id}" class="edit-form hidden">
+                    <label for="edit-title" class="form-label"></label>
+                    <input class="form-control" id="edit-title" name="edit-title" type="text" placeholder="Post Title" value="${post.title}"/>
+                    <div class="d-flex">
+                        <textarea class="form-control w-75" name="content" id="edit-content" placeholder="Content">${post.content}</textarea>
+
+                        <select class="form-select w-25" multiple id="edit-category-select">
+                            ${showFormCategories(categories)}
+                        </select>
+                    </div>
+                </div>
                 <div class="card-footer d-flex justify-content-between bg-transparent mb-5">
                     <div>
-                        <button data-id="${post.id}" class="edit-btn btn btn-sm btn-primary"
+                        <button type="button" data-id="${post.id}" class="edit-btn btn btn-sm btn-primary"
                         ">Edit Post</button>
-                        <button data-id="${post.id}" class="del-btn btn btn-sm btn-primary"
+                        <button type="button" data-id="${post.id}" class="del-btn btn btn-sm btn-primary"
                         ">Delete Post</button>
+                        <button type="button" data-id="${post.id}" class="save-btn btn btn-sm btn-primary hidden"
+                        ">Save Post</button>
+                        <button type="button" data-id="${post.id}" class="cancel-edit-btn btn btn-sm btn-primary hidden"
+                        ">Cancel</button>
                     </div>
                     <div>
                         <p>${getAuthor(post.author)}</p>
@@ -55,83 +69,91 @@ const showUserPosts = (posts) => {
             </div>
         `).join('')
 }
-
-const submit = _ => {
-    $("main").click((e) => {
+const editPost = _ => {
+    $(".post-container").click(function (e) {
         if (e.target.classList.contains("edit-btn")) {
-            id = e.target.getAttribute("data-id")
-            $("#title").val($(`#title-${id}`).html())
-            $("#content").val($(`#content-${id}`).html())
+            $(".edit-form", this).removeClass('hidden');
+            $(".save-btn", this).removeClass('hidden');
+            $(".cancel-edit-btn", this).removeClass('hidden');
+            $(".post", this).addClass('hidden');
+            $(".edit-btn", this).addClass('hidden');
+            $(".del-btn", this).addClass('hidden');
+        } else if (e.target.classList.contains("cancel-edit-btn")) {
+            $(".edit-form", this).addClass('hidden');
+            $(".save-btn", this).addClass('hidden');
+            $(".cancel-edit-btn", this).addClass('hidden');
+            $(".post", this).removeClass('hidden');
+            $(".edit-btn", this).removeClass('hidden');
+            $(".del-btn", this).removeClass('hidden');
         }
     });
-    $('#submit-btn').click(function () {
-        id === null ? createPost() : editPost(id)
-    });
+}
+
+const showCreateForm = _ => {
+    const $postForm = $("#post-form");
+    $('#create-form').click(function () {
+        if ($postForm.css('display') === "none") {
+            $postForm.fadeIn('slow')
+        } else {
+            $postForm.fadeOut('slow')
+        }
+    })
 }
 
 const createPost = _ => {
-    let categories = $("#category-select").val();
-    const newPost = {
-        title: $('#title').val(),
-        content: $('#content').val()
-    }
+    $("#create-post-btn").click(function () {
 
-    let postRequest = {
-        method: "POST",
-        headers: {
-            Authorization: `${getToken()}`,
-            "Content-Type": 'application/json'
-        },
-        body: JSON.stringify(newPost)
-    }
+        const newPost = {
+            title: $('#title').val(),
+            content: $('#content').val(),
+            categories: $("#category-select").val()
+        }
 
-    fetch(`http://localhost:8080/api/posts?categories=${categories}`, postRequest)
-        .then(res => {
-            console.log(res.status)
-            createView("/userPosts")
-        }).catch(error => {
-        console.log(error);
-        createView("/userPosts");
-    });
+        let postRequest = {
+            method: "POST",
+            headers: getHeaders(),
+            body: JSON.stringify(newPost)
+        }
+        fetchData({server: `/api/posts`}, postRequest)
+            .then(res => {
+                console.log(res.status)
+                createView("/userPosts")
+            })
+    })
 }
 
-const editPost = id => {
-    setScroll()
-    let categories = $("#category-select").val();
-    const updatePost = {
-        title: $("#title").val(),
-        content: $("#content").val()
-    }
+const savePost = _ => {
+    $(".save-btn").click(function () {
+        let categories = $("#category-select").val();
+        const updatePost = {
+            title: $("#title").val(),
+            content: $("#content").val()
+        }
 
-    const editRequest = {
-        method: "PUT",
-        headers: {
-            Authorization: getToken(),
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(updatePost)
-    }
-
-    fetch(`http://localhost:8080/api/posts/${id}?categories=${categories}`, editRequest)
-        .then(_ => {
-            createView("/userPosts")
-        }).catch(_ => {
-        createView("/userPosts");
-    });
+        const editRequest = {
+            method: "PUT",
+            headers: getHeaders(),
+            body: JSON.stringify(updatePost)
+        }
+        fetchData({server: `/api/posts/${id}?categories=${categories}`}, editRequest)
+            .then(_ => {
+                createView("/userPosts")
+            })
+    })
 }
 
 const deletePost = _ => {
-    $("main").click((e) => {
-        if (e.target.classList.contains("del-btn")) {
-            const index = parseInt((e.target.getAttribute("data-id")))
-            fetch(`http://localhost:8080/api/posts/${index}`, {method: "DELETE", headers: {Authorization: getToken()}})
-                .then(res => {
-                    createView("/userPosts")
-                }).catch(error => {
-                console.log(error);
-                createView("/userPosts");
-            });
+    $(".del-btn").click(function () {
+        console.log($(this))
+        let deleteRequest = {
+            method: "DELETE",
+            headers: getHeaders()
         }
+        const postToDelete = $(this).data("id")
+        fetchData({server: `/api/posts/${postToDelete}`}, deleteRequest)
+            .then(_ => {
+                createView("/userPosts")
+            })
     });
 }
 
@@ -139,19 +161,14 @@ const clearForm = _ => {
     $("#clear-btn").click(_ => {
         $("#title").val("")
         $("#content").val("")
-        id = null
-    })
-}
-
-const setScroll = () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
     })
 }
 
 export function UserPostsEvent() {
-    submit();
+    showCreateForm();
+    createPost();
+    editPost();
+    savePost();
     deletePost();
     clearForm();
 }

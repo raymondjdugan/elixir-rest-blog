@@ -53,7 +53,6 @@ public class UserController {
     @PostMapping("create")
     @PreAuthorize("!hasAuthority('USER') && !hasAuthority('ADMIN')")
     void createUser(@RequestBody User newUser) {
-        System.out.println(newUser.toString());
         newUser.setRole(User.Role.USER);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);

@@ -61,6 +61,7 @@ export default function AccountInfo(props) {
 const getUserRole = _ => {
     const token = localStorage.getItem(("access_token"))
     const user = JSON.parse(atob(token.split(".")[1]))
+    console.log(user)
     const [role] = user.authorities;
     if (role === "ADMIN") {
         $("#find-user").removeAttr("disabled")

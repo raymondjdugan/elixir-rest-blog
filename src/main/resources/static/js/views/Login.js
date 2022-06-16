@@ -17,11 +17,10 @@ export default function Login(props) {
             <input class="form-control" id="username" name="username" type="text"/>
             <label class="form-label" for="password">Password</label>
             <input class="form-control" id="password" name="password" type="password"/>
-            <input class="mt-2 btn btn-primary" id="login-btn" type="submit" value="Log In"/>
+            <button class="mt-2 btn btn-primary" id="login-btn" type="button">Log In</button>
         </form>
     </main>
     </body>
     </html>`;
-
 }
 

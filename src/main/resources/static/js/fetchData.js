@@ -12,11 +12,17 @@ export default function fetchData(state, request) {
 
     // console.log("got to fetch data");
     for (let pieceOfState of Object.keys(state)) {
-        // console.log(baseUri + state[pieceOfState]);
         promises.push(
             fetch(baseUri + state[pieceOfState], request)
                 .then(function (res) {
-                    return res.json();
+                    if (request.method === "POST" && typeof request.body === "string" && request.body.includes("grant")) {
+                        return res.json()
+                    } else if (request.method === "POST" || request.method === "PUT" || request.method === "PATCH" ||request.method === "DELETE") {
+                        console.log(res)
+                        return res
+                    } else {
+                        return res.json()
+                    }
                 }));
     }
     return Promise.all(promises).then(propsData => {

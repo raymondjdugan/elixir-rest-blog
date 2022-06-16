@@ -33,6 +33,6 @@ public class Category {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
-    @JsonIgnoreProperties("categories")
+    @JsonIgnoreProperties({"categories", "posts"})
     private Collection<Post> posts;
 }

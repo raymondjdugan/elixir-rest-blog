@@ -30,6 +30,7 @@ export default function addLoginEvent() {
             },
             request).then((data) => {
             if (data.route.error === 'invalid_grant') {
+                console.log("Invalid Credentials. Please Try Again")
                 $("#log-error-message").html("Invalid Credentials. Please Try Again")
                 return
             }
