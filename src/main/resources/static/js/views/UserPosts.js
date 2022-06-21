@@ -10,6 +10,7 @@ export default function UserPosts(props) {
             <div class="w-50">
                 <button type="button" id="create-form" class="btn btn-primary mt-2 position-absolute top-0 end-0 mt-2">Create New Post</button>
                 <form id="post-form" class="hidden w-100">
+                    <div class="h4 text-center text-danger" id="create-post-error"></div>
                     <div id="form-scroll" class="text-center">
                         <label for="title" class="form-label"></label>
                         <input class="form-control" id="title" name="title" type="text" placeholder="Enter Title Here"/>
@@ -69,25 +70,6 @@ const showUserPosts = (posts, categories) => {
             </div>
         `).join('')
 }
-const editPost = _ => {
-    $(".post-container").click(function (e) {
-        if (e.target.classList.contains("edit-btn")) {
-            $(".edit-form", this).removeClass('hidden');
-            $(".save-btn", this).removeClass('hidden');
-            $(".cancel-edit-btn", this).removeClass('hidden');
-            $(".post", this).addClass('hidden');
-            $(".edit-btn", this).addClass('hidden');
-            $(".del-btn", this).addClass('hidden');
-        } else if (e.target.classList.contains("cancel-edit-btn")) {
-            $(".edit-form", this).addClass('hidden');
-            $(".save-btn", this).addClass('hidden');
-            $(".cancel-edit-btn", this).addClass('hidden');
-            $(".post", this).removeClass('hidden');
-            $(".edit-btn", this).removeClass('hidden');
-            $(".del-btn", this).removeClass('hidden');
-        }
-    });
-}
 
 const showCreateForm = _ => {
     const $postForm = $("#post-form");
@@ -108,6 +90,10 @@ const createPost = _ => {
             content: $('#content').val(),
             categories: $("#category-select").val()
         }
+        if (newPost.title === "" || newPost.content === "" ){
+            $("#create-post-error").html("Please fill out all fields")
+            return;
+        }
 
         let postRequest = {
             method: "POST",
@@ -120,6 +106,26 @@ const createPost = _ => {
                 createView("/userPosts")
             })
     })
+}
+
+const editPost = _ => {
+    $(".post-container").click(function (e) {
+        if (e.target.classList.contains("edit-btn")) {
+            $(".edit-form", this).removeClass('hidden');
+            $(".save-btn", this).removeClass('hidden');
+            $(".cancel-edit-btn", this).removeClass('hidden');
+            $(".post", this).addClass('hidden');
+            $(".edit-btn", this).addClass('hidden');
+            $(".del-btn", this).addClass('hidden');
+        } else if (e.target.classList.contains("cancel-edit-btn")) {
+            $(".edit-form", this).addClass('hidden');
+            $(".save-btn", this).addClass('hidden');
+            $(".cancel-edit-btn", this).addClass('hidden');
+            $(".post", this).removeClass('hidden');
+            $(".edit-btn", this).removeClass('hidden');
+            $(".del-btn", this).removeClass('hidden');
+        }
+    });
 }
 
 const savePost = _ => {
@@ -163,7 +169,7 @@ const deletePost = _ => {
 }
 
 const clearForm = _ => {
-    $("#clear-btn").click(_ => {
+    $("#clear-form-btn").click(_ => {
         $("#title").val("")
         $("#content").val("")
     })
