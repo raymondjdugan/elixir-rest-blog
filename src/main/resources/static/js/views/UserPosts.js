@@ -1,6 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders} from "../auth.js";
-import {getAuthor, getPostCategories, showFormCategories} from "../postFunctions.js";
+import { getAuthor, getPostCategories, showFormCategories } from "../postFunctions.js";
 import fetchData from "../fetchData.js";
 
 export default function UserPosts(props) {
@@ -123,22 +123,27 @@ const createPost = _ => {
 }
 
 const savePost = _ => {
-    $(".save-btn").click(function () {
-        let categories = $("#category-select").val();
-        const updatePost = {
-            title: $("#title").val(),
-            content: $("#content").val()
-        }
+    $(".post-container").click(function (e) {
+        if (e.target.classList.contains("save-btn")) {
+            const postToUpdate = $(this).data("id");
+            console.log(postToUpdate)
+            const updatePost = {
+                title: $("#edit-title", this).val(),
+                content: $("#edit-content", this).val(),
+                categories: $("#edit-category-select", this).val()
+            }
+            console.log(updatePost)
 
-        const editRequest = {
-            method: "PUT",
-            headers: getHeaders(),
-            body: JSON.stringify(updatePost)
+            const editRequest = {
+                method: "PUT",
+                headers: getHeaders(),
+                body: JSON.stringify(updatePost)
+            }
+            fetchData({server: `/api/posts/${postToUpdate}`}, editRequest)
+                .then(_ => {
+                    createView("/userPosts")
+                })
         }
-        fetchData({server: `/api/posts/${id}?categories=${categories}`}, editRequest)
-            .then(_ => {
-                createView("/userPosts")
-            })
     })
 }
 
