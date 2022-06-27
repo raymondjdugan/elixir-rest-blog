@@ -65,20 +65,22 @@ public class PostController {
     }
 
     @PutMapping("{id}")
-    void updatePost(@PathVariable long id, @RequestBody Post newPost, @RequestParam String[] categories) {
-        Post postToUpate = postRepository.getById(id);
-        if (!newPost.getTitle().isEmpty()) {
-            postToUpate.setTitle(newPost.getTitle());
+    void updatePost(@PathVariable long id, @RequestBody NewPostDTO newPostDTO) {
+        Post postToUpdate = postRepository.getById(id);
+        if (!newPostDTO.getTitle().isEmpty()) {
+            postToUpdate.setTitle(newPostDTO.getTitle());
         }
-        if (!newPost.getContent().isEmpty()) {
-            postToUpate.setContent(newPost.getContent());
+        if (!newPostDTO.getContent().isEmpty()) {
+            postToUpdate.setContent(newPostDTO.getContent());
         }
-        List<Category> categoriesList = new ArrayList<>();
-        for (String category : categories) {
-            categoriesList.add(categoryRepsitory.findByName(category));
+        if  (!newPostDTO.getCategories().isEmpty()) {
+            List<Category> categoriesList = new ArrayList<>();
+            for (String category : newPostDTO.getCategories()) {
+                categoriesList.add(categoryRepsitory.findByName(category));
+            }
+            postToUpdate.setCategories(categoriesList);
         }
-        postToUpate.setCategories(categoriesList);
-        postRepository.save(postToUpate);
+        postRepository.save(postToUpdate);
     }
 
     @DeleteMapping("{id}")

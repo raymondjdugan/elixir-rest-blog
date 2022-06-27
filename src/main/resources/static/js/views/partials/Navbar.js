@@ -5,11 +5,8 @@ export default function Navbar(props) {
 
     let html = `
         <nav class="navbar navbar-light bg-dark">
-            <a class="navbar-brand text-white mx-2" href="/">Sir Bloggify</a>
+            <a class="navbar-brand text-white mx-2" href="/" data-link>Sir Bloggify</a>
             <ul class="nav">
-                <li class="nav-item">
-                    <a href="/" data-link class="nav-link text-white">Home</a>
-                </li>
                 <li class="nav-item">
                     <a href="/posts" data-link class="nav-link text-white">Posts</a>
                 </li>
@@ -30,13 +27,13 @@ export default function Navbar(props) {
         //language=html
         html += `
             <li class="nav-item">
-                <a href="/logout" data-link class="nav-link text-white">Logout</a>
-            </li>
-            <li class="nav-item">
                 <a href="/userPosts" data-link class="nav-link text-white">My Posts</a>
             </li>
             <li class="nav-item">
-                <a href="/accountInfo" data-link class="nav-link text-white">Account Information</a>
+                <a href="/accountInfo" data-link class="nav-link text-white">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout" data-link class="nav-link text-white">Logout</a>
             </li>`
     }
     //language=HTML
